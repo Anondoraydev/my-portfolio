@@ -49,7 +49,7 @@ const Contact = () => {
                 className="text-xs lg:text-sm"
               >
                 Chat on WhatsApp
-              </a>
+              </a>  
             </div>
           </div>
         </div>

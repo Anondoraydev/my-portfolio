@@ -10,7 +10,7 @@ const AnimatedBackground = () => {
 
     const createParticle = () => {
       const particle = document.createElement("div");
-      const size = Math.random() * 3 + 1;
+      const size = Math.random() * 2 + 1;
 
       Object.assign(particle.style, {
         width: `${size}px`,
@@ -59,33 +59,41 @@ const AnimatedBackground = () => {
 
     for (let i = 0; i < particleCount; i++) createParticle();
 
+    // ✅ Glowing particle on mousemove (smaller and softer)
     const mouseHandler = (e) => {
-      const mouseX = (e.clientX / window.innerWidth) * 100;
-      const mouseY = (e.clientY / window.innerHeight) * 100;
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
 
       const particle = document.createElement("div");
-      const size = Math.random() * 4 + 2;
+      const size = Math.random() * 6 + 4;
+
+      const colors = ["#00ffff", "#ff00ff", "#00ff99", "#ffcc00", "#ffffff"];
+      const color = colors[Math.floor(Math.random() * colors.length)];
 
       Object.assign(particle.style, {
         width: `${size}px`,
         height: `${size}px`,
-        position: "absolute",
-        borderRadius: "9999px",
-        backgroundColor: "#fff",
-        left: `${mouseX}%`,
-        top: `${mouseY}%`,
+        position: "fixed",
+        left: `${mouseX}px`,
+        top: `${mouseY}px`,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${color}, transparent 70%)`,
+        opacity: 0.6,
         pointerEvents: "none",
+        filter: "blur(3px)",
+        transform: "translate(-50%, -50%)",
+        zIndex: 30,
       });
 
       particlesContainer.appendChild(particle);
 
       gsap.to(particle, {
+        scale: 1.8,
         opacity: 0,
-        duration: 0.6,
+        duration: 1,
+        ease: "power2.out",
         onComplete: () => {
-          if (particlesContainer.contains(particle)) {
-            particlesContainer.removeChild(particle);
-          }
+          particlesContainer.removeChild(particle);
         },
       });
     };
@@ -95,40 +103,37 @@ const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen -z-50">
+    <div className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden">
       <div className="relative w-full h-full bg-black text-white font-sans">
         <div className="absolute inset-0 z-0">
-          {/* Gradient Motion Layers */}
+          {/* Gradient Layers */}
+          <div
+            className="absolute rounded-full blur-3xl"
+            style={{
+              width: "35vw",
+              height: "35vw",
+              background: "linear-gradient(40deg, #06010d, rgba(102, 0, 204, 0.02))",
+              top: "-10%",
+              left: "-10%",
+              animation: "moveGradient1 12s ease-in-out infinite alternate",
+            }}
+          />
           <div
             className="absolute rounded-full blur-3xl"
             style={{
               width: "40vw",
               height: "40vw",
-              background:
-                "linear-gradient(40deg, #06010d, rgba(102, 0, 204, 0.01))",
-              top: "-10%",
-              left: "-10%",
-              animation: "moveGradient1 10s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "45vw",
-              height: "45vw",
-              background:
-                "linear-gradient(40deg, #06010d, rgba(118, 75, 162, 0.1))",
-
+              background: "linear-gradient(40deg, #06010d, rgba(118, 75, 162, 0.08))",
               bottom: "-20%",
               right: "-10%",
-              animation: "moveGradient2 18s ease-in-out infinite alternate",
+              animation: "moveGradient2 16s ease-in-out infinite alternate",
             }}
           />
           <div
             className="absolute rounded-full blur-3xl"
             style={{
-              width: "30vw",
-              height: "30vw",
+              width: "25vw",
+              height: "25vw",
               background: "radial-gradient(circle, #06010d, transparent 70%)",
               top: "60%",
               left: "20%",
@@ -136,24 +141,24 @@ const AnimatedBackground = () => {
             }}
           />
 
-          {/* Radial center glow */}
+          {/* Radial glow */}
           <div
-            className="absolute w-[40vw] h-[40vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 blur-3xl"
+            className="absolute w-[30vw] h-[30vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 blur-3xl"
             style={{
-              background:
-                "radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%)",
+              background: "radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%)",
             }}
           />
 
-          {/* Grid lines */}
-          <div className="absolute inset-0 z-10 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]" />
+          {/* Grid */}
+          <div className="absolute inset-0 z-10 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
 
           {/* Particles */}
           <div
             ref={particlesRef}
             className="absolute inset-0 z-20 pointer-events-none"
           />
-          {/* Noise texture */}
+
+          {/* Noise overlay */}
           <div
             className="absolute inset-0 z-10 opacity-5"
             style={{
@@ -162,18 +167,19 @@ const AnimatedBackground = () => {
           />
         </div>
       </div>
-      {/* Custom animations using CSS */}
+
+      {/* Animations */}
       <style>{`
         @keyframes moveGradient1 {
-          0% { transform: translateX(0%); }
+          0% { transform: translateX(0); }
           100% { transform: translateX(-100%); }
         }
         @keyframes moveGradient2 {
-          0% { transform: translateX(0%); }
+          0% { transform: translateX(0); }
           100% { transform: translateX(-100%); }
         }
         @keyframes moveGradient3 {
-          0% { transform: translateX(0%); }
+          0% { transform: translateX(0); }
           100% { transform: translateX(-100%); }
         }
       `}</style>
