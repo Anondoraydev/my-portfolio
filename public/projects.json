@@ -2,8 +2,8 @@
   {
     "id": 1,
     "name": "JobHive Hiring Agency Platform",
-    "images": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
-    "image": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
+    "images": "https://i.ibb.co/twpRXStd/Screenshot-2024-10-25-200015.png",
+    "image": "https://i.ibb.co/twpRXStd/Screenshot-2024-10-25-200015.png",
     "stack": [
       "React Js",
       "DaisyUi",
@@ -28,8 +28,8 @@
 
     "stack": ["React Js", "DaisyUi", "Tailwind CSS"],
     "description": "This platform is designed for micro-tasking and earning, where users take on specific roles to complete tasks, submit reviews, withdraw coins, and receive notifications. The platform consists of three key roles: Worker, Buyer, and Admin. ",
-    "liveLink": "https://workflow-bd.web.app/",
-    "github": "https://github.com/alaminislam34/Workflow-Earning-Platform",
+    "liveLink": "https://steep-silk.surge.sh/",
+    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
     "challenges": "Securing the user API based on roles was a significant challenge for me.",
     "improvements": "I have implemented robust security measures for all buyer and admin features, ensuring that unauthorized access is completely prevented."
   },
@@ -48,8 +48,8 @@
       "Firebase"
     ],
     "description": "The home repair service website is a platform where users can easily purchase home services. Additionally, anyone can act as an admin to post their own services and provide them, while also being able to avail other services. However, users cannot purchase the services they have posted themselves.",
-    "liveLink": "https://homerepairservicesbd.web.app/",
-    "github": "https://github.com/alaminislam34/Home-Repair-Service",
+    "liveLink": "https://steep-silk.surge.sh/",
+    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
     "challenges": "Developing an API to efficiently manage services posed a considerable challenge for me.",
     "improvements": "I have implemented JWT token-based authentication to secure all essential APIs, ensuring robust security."
   },
@@ -68,8 +68,8 @@
       "Firebase"
     ],
     "description": "It’s a comprehensive blood donation platform where users can create accounts to register as blood donors or recipients. In times of need, users can directly contact blood donors based on their location. The platform aims to provide an efficient and secure way for individuals to find and connect with potential blood donors, ensuring timely access to blood donations in critical situations.",
-    "liveLink": "https://blood-donor-ar.web.app/",
-    "github": "https://github.com/alaminislam34/Blood-Donor-Champ",
+    "liveLink": "https://steep-silk.surge.sh/",
+    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
     "challenges": "I didn’t face any major problems, but developing the APIs did present some challenges.",
     "improvements": "I implemented a feedback form to allow users to submit their suggestions and opinions, ensuring valuable input for continuous improvement."
   }

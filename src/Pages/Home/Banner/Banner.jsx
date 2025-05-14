@@ -37,7 +37,6 @@ const Banner = () => {
     },
   ];
 
-
   return (
     <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-0 text-white">
       {/* Left Content */}
@@ -103,9 +102,9 @@ const Banner = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-xl text-white inline-block p-2 rounded-xl border border-white/50"
+                  className="text-xl text-white inline-block p-2 rounded-xl border border-white/50 group"
                 >
-                  {icon}
+                  <span className="group-hover:text-blue-500">{icon}</span>
                 </a>
               </motion.li>
             ))}
@@ -171,7 +170,7 @@ const Banner = () => {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-Glow/50 opacity-0 group-hover:opacity-80 transition duration-300 blur-xl -z-10" />
-                <FaReact className="text-6xl text-Accent" />
+                <FaReact className="text-6xl text-Accent group-hover:text-blue-500" />
               </div>
             </motion.button>
 
@@ -188,7 +187,7 @@ const Banner = () => {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-Glow/50 opacity-0 group-hover:opacity-80 transition duration-300 blur-xl -z-10" />
-                <RiTailwindCssFill className="text-6xl text-Accent" />
+                <RiTailwindCssFill className="text-6xl text-Accent group-hover:text-blue-500" />
               </div>
             </motion.button>
           </motion.div>
