@@ -1,6 +1,5 @@
 import { FaReact } from "react-icons/fa";
 import { LuLinkedin, LuFacebook, LuGithub } from "react-icons/lu";
-// import image from "../../../assets/Image/alaminBW.jpg";
 import { MdFileDownload } from "react-icons/md";
 import { Link } from "react-scroll";
 import { VscGithubProject } from "react-icons/vsc";
@@ -157,11 +156,11 @@ const Banner = () => {
                   options={{ animationData: bg, autoplay: true, loop: true }}
                 />
               </div>
-              {/* <img
+              <img
                 className="w-full h-full object-cover scale-125 z-10 relative"
-                src={image}
-                alt="alamin"
-              /> */}
+                src={''}
+                alt="Anondo"
+              />
             </div>
 
             {/* React Icon */}
