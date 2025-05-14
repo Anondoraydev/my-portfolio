@@ -2,29 +2,8 @@
   {
     "id": 1,
     "name": "JobHive Hiring Agency Platform",
-    "images": "https://i.ibb.co.com/Q3cK856y/team-Project-jpg.png",
-    "image": "https://i.ibb.co.com/Q3cK856y/team-Project-jpg.png",
-    "stack": [
-      "React Js",
-      "DaisyUi",
-      "Tailwind CSS",
-      "Next.js",
-      "MongoDB",
-      "NextAuth",
-      "ZegoCloud",
-      "Socket.io"
-    ],
-    "description": "A Hiring Agency & Communication Platform connects job seekers, employers, freelancers, and recruiters in various industries. Job seekers can create profiles, apply for jobs, and communicate with employers. Employers can post job listings, shortlist candidates, and conduct interviews. ",
-    "liveLink": "https://jobhive-agency.vercel.app/",
-    "github": "https://github.com/alaminislam34/Hiring-Agency-Communication-Platform",
-    "challenges": "Securing the user API based on roles was a significant challenge for me.",
-    "improvements": "I have implemented robust security measures for all buyer and admin features, ensuring that unauthorized access is completely prevented."
-  },
-  {
-    "id": 2,
-    "name": "WorkFlow Earning Platform",
-    "images": "https://i.ibb.co.com/7xWZHG4m/asignment12-jpg.png",
-    "image": "https://i.ibb.co.com/7xWZHG4m/asignment12-jpg.png",
+    "images": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
+    "image": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
     "stack": [
       "React Js",
       "DaisyUi",
@@ -35,6 +14,19 @@
       "Node.js",
       "Firebase"
     ],
+    "description": "A Hiring Agency & Communication Platform connects job seekers, employers, freelancers, and recruiters in various industries. Job seekers can create profiles, apply for jobs, and communicate with employers. Employers can post job listings, shortlist candidates, and conduct interviews. ",
+    "liveLink": "https://steep-silk.surge.sh/",
+    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
+    "challenges": "Securing the user API based on roles was a significant challenge for me.",
+    "improvements": "I have implemented robust security measures for all buyer and admin features, ensuring that unauthorized access is completely prevented."
+  },
+  {
+    "id": 2,
+    "name": "WorkFlow Earning Platform",
+    "images": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
+    "image": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
+
+    "stack": ["React Js", "DaisyUi", "Tailwind CSS"],
     "description": "This platform is designed for micro-tasking and earning, where users take on specific roles to complete tasks, submit reviews, withdraw coins, and receive notifications. The platform consists of three key roles: Worker, Buyer, and Admin. ",
     "liveLink": "https://workflow-bd.web.app/",
     "github": "https://github.com/alaminislam34/Workflow-Earning-Platform",
