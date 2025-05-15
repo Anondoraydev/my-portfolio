@@ -6,6 +6,8 @@ const AnimatedBackground = () => {
 
   useEffect(() => {
     const particlesContainer = particlesRef.current;
+    if (!particlesContainer) return;
+
     const particleCount = 20;
 
     const createParticle = () => {
@@ -57,13 +59,18 @@ const AnimatedBackground = () => {
       }, delay * 1000);
     };
 
+    // Create background particles
     for (let i = 0; i < particleCount; i++) createParticle();
 
-    // ✅ Glowing particle on mousemove (smaller and softer)
+    // Debounced Mouse Particle Effect
+    let lastTime = 0;
     const mouseHandler = (e) => {
+      const now = Date.now();
+      if (now - lastTime < 100) return; // Only allow every 100ms
+      lastTime = now;
+
       const mouseX = e.clientX;
       const mouseY = e.clientY;
-
       const particle = document.createElement("div");
       const size = Math.random() * 6 + 4;
 
@@ -82,7 +89,7 @@ const AnimatedBackground = () => {
         pointerEvents: "none",
         filter: "blur(3px)",
         transform: "translate(-50%, -50%)",
-        zIndex: 30,
+        zIndex: "1",
       });
 
       particlesContainer.appendChild(particle);
@@ -93,7 +100,9 @@ const AnimatedBackground = () => {
         duration: 1,
         ease: "power2.out",
         onComplete: () => {
-          particlesContainer.removeChild(particle);
+          if (particlesContainer.contains(particle)) {
+            particlesContainer.removeChild(particle);
+          }
         },
       });
     };
@@ -103,9 +112,9 @@ const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden">
-      <div className="relative w-full h-full bg-black text-white font-sans">
-        <div className="absolute inset-0 z-0">
+    <div className="fixed top-0 left-0 w-screen h-screen -z-50 pointer-events-none">
+      <div className="relative w-full h-full bg-black font-sans">
+        <div className="absolute inset-0">
           {/* Gradient Layers */}
           <div
             className="absolute rounded-full blur-3xl"
@@ -141,26 +150,26 @@ const AnimatedBackground = () => {
             }}
           />
 
-          {/* Radial glow */}
+          {/* Radial Glow */}
           <div
-            className="absolute w-[30vw] h-[30vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 blur-3xl"
+            className="absolute w-[30vw] h-[30vh] top-1/2 left-1/2 -z-50 -translate-x-1/2 -translate-y-1/2 blur-3xl"
             style={{
               background: "radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%)",
             }}
           />
 
-          {/* Grid */}
-          <div className="absolute inset-0 z-10 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
+          {/* Grid Lines */}
+          <div className="absolute inset-0 bg-[length:40px_40px] -z-50 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
 
           {/* Particles */}
           <div
             ref={particlesRef}
-            className="absolute inset-0 z-20 pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
           />
 
-          {/* Noise overlay */}
+          {/* Noise */}
           <div
-            className="absolute inset-0 z-10 opacity-5"
+            className="absolute inset-0 opacity-5 -z-50"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
             }}
@@ -168,19 +177,19 @@ const AnimatedBackground = () => {
         </div>
       </div>
 
-      {/* Animations */}
+      {/* Animation Keyframes */}
       <style>{`
         @keyframes moveGradient1 {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
+          100% { transform: translateX(-50%); }
         }
         @keyframes moveGradient2 {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
         }
         @keyframes moveGradient3 {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(-30%, -30%); }
         }
       `}</style>
     </div>

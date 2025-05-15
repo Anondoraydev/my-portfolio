@@ -27,12 +27,12 @@ const Main = () => {
   }, []);
   return (
     <div className={`overflow-hidden relative`}>
+      <AnimatedBackground />
       <Navbar />
       <section className="max-w-7xl w-11/12 mx-auto min-h-[75vh] mb-12">
         <Outlet />
       </section>
       <Footer />
-      <AnimatedBackground />
       <WelcomePage />
       <ToastContainer autoClose={3000} hideProgressBar={true} />
       <div className="relative">

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { RiMenu2Fill } from "react-icons/ri";
-import { GrClose, GrContactInfo } from "react-icons/gr";
+import { GrContactInfo } from "react-icons/gr";
 import { Link } from "react-scroll";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -12,56 +12,9 @@ import { X } from "lucide-react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(false);
-  const lastScrollY = useRef(0);
   const [activeSection, setActiveSection] = useState("home");
-  console.log(scrollY);
-  useEffect(() => {
-    const sections = document.querySelectorAll("[data-section]");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "-8% 0px -8% 0px",
-      }
-    );
-
-    Aos.init({
-      once: false,
-      delay: 300,
-      duration: 1500,
-    });
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 10) {
-        setScrollY(false);
-      } else if (currentScrollY > lastScrollY.current) {
-        setScrollY(true);
-      } else {
-        setScrollY(false);
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const lastScrollY = useRef(0);
 
   const links = [
     { name: "Home", path: "home", icon: <GoHome /> },
@@ -71,105 +24,68 @@ const Navbar = () => {
     { name: "Contact", path: "contact", icon: <IoMailUnreadOutline /> },
   ];
 
+  // Section observer for active nav link highlighting
+  useEffect(() => {
+    const sections = document.querySelectorAll("[data-section]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    Aos.init({ once: false, delay: 300, duration: 1500 });
+
+    sections.forEach((section) => observer.observe(section));
+    return () => sections.forEach((section) => observer.unobserve(section));
+  }, []);
+
+  // Scroll listener to show/hide navbar on scroll up/down
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // Scroll down → hide navbar
+        setShowNavbar(false);
+      } else {
+        // Scroll up → show navbar
+        setShowNavbar(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // ক্লিক করলে activeSection সেট করার জন্য (optional)
+  const handleSetActive = (to) => {
+    setActiveSection(to);
+    setOpen(false); // মোবাইল মেনু ক্লোজ করার জন্য
+  };
+
   return (
     <div className="h-[76px]">
-      <div className={`w-full fixed left-0 z-50 duration-700 top-0  `}>
-        <nav
-          className={`my-4 rounded-2xl backdrop-blur-xl duration-300 max-w-7xl w-11/12 mx-auto`}
-        >
-          <div className="flex items-center justify-between py-2 px-6 rounded-[14px] bg-gradient-to-r from-[#1f1f2e]/80 via-[#2b1b36]/80 to-[#1f1f2e]/80  shadow-md shadow-purple-800/20 backdrop-blur-md relative">
-            {/*  *******************************Gradient Motion Layers Start****************************** */}
-            <div className="absolute inset-0 -z-10 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]" />
-            <div
-              className="absolute rounded-full blur-3xl"
-              style={{
-                width: "40vw",
-                height: "40vw",
-                background:
-                  "linear-gradient(40deg, rgba(128, 0, 255, 0.1), rgba(102, 0, 204, 0.1))",
-                top: "-10%",
-                left: "-10%",
-                animation: "moveGradient1 15s ease-in-out infinite alternate",
-              }}
-            />
-            <div
-              className="absolute rounded-full blur-3xl"
-              style={{
-                width: "45vw",
-                height: "45vw",
-                background:
-                  "linear-gradient(40deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))",
-
-                bottom: "-20%",
-                right: "-10%",
-                animation: "moveGradient2 18s ease-in-out infinite alternate",
-              }}
-            />
-            <div
-              className="absolute rounded-full blur-3xl"
-              style={{
-                width: "30vw",
-                height: "30vw",
-                background:
-                  "radial-gradient(circle, rgba(102, 126, 234, 0.15), transparent 70%)",
-                top: "60%",
-                left: "20%",
-                animation: "moveGradient3 20s ease-in-out infinite alternate",
-              }}
-            />
-
-            {/*  *******************************Gradient Motion Layers END****************************** */}
+      <div
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${showNavbar ? "translate-y-0 h-[76px]" : "-translate-y-full h-0"
+          }`}
+      >
+        <nav className="my-4 rounded-2xl backdrop-blur-xl max-w-7xl w-11/12 mx-auto duration-300">
+          <div className="flex items-center justify-between py-2 px-6 rounded-[14px] bg-gradient-to-r from-[#1f1f2e]/80 via-[#2b1b36]/80 to-[#1f1f2e]/80 shadow-md shadow-purple-800/20 backdrop-blur-md relative transition-all duration-500 ease-in-out">
             {/* Mobile Menu */}
             <div
               className={`absolute left-0 w-full z-50 bg-gradient-to-r from-[#1f1f2e] via-[#2b1b36] to-[#1f1f2e] backdrop-blur-2xl text-white rounded-xl duration-500 ${open ? "top-0" : "-top-96"
                 }`}
             >
               <ul className="flex flex-col p-6 space-y-4 relative">
-                {/*  *******************************Gradient Motion Layers Start****************************** */}
-                <div className="absolute inset-0 -z-10 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]" />
-                <div
-                  className="absolute -z-10 rounded-full blur-3xl"
-                  style={{
-                    width: "40vw",
-                    height: "40vw",
-                    background:
-                      "linear-gradient(40deg, rgba(128, 0, 255, 0.1), rgba(102, 0, 204, 0.1))",
-                    top: "-10%",
-                    left: "-10%",
-                    animation:
-                      "moveGradient1 15s ease-in-out infinite alternate",
-                  }}
-                />
-                <div
-                  className="absolute -z-10 rounded-full blur-3xl"
-                  style={{
-                    width: "45vw",
-                    height: "45vw",
-                    background:
-                      "linear-gradient(40deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))",
-
-                    bottom: "-20%",
-                    right: "-10%",
-                    animation:
-                      "moveGradient2 18s ease-in-out infinite alternate",
-                  }}
-                />
-                <div
-                  className="absolute -z-10 rounded-full blur-3xl"
-                  style={{
-                    width: "30vw",
-                    height: "30vw",
-                    background:
-                      "radial-gradient(circle, rgba(102, 126, 234, 0.15), transparent 70%)",
-                    top: "60%",
-                    left: "20%",
-                    animation:
-                      "moveGradient3 20s ease-in-out infinite alternate",
-                  }}
-                />
-
-                {/*  *******************************Gradient Motion Layers END****************************** */}
-                <div className="absolute top-4 right-4 text-xl transition z-10">
+                <div className="absolute top-4 right-4 text-xl z-10">
                   <button
                     onClick={() => setOpen(false)}
                     className="btn btn-sm cursor-pointer"
@@ -177,20 +93,19 @@ const Navbar = () => {
                     <X />
                   </button>
                 </div>
-                {links.map((item) => (
-                  <li
-                    key={item.path}
-                    data-aos="fade-up"
-                    className="text-center"
-                  >
+                {links.map(({ name, path }) => (
+                  <li key={path} data-aos="fade-up" className="text-center">
                     <Link
-                      to={item.path}
+                      to={path}
                       smooth={true}
                       duration={500}
-                      onClick={() => setOpen(false)}
-                      className="text-base px-4 py-2 rounded-md transition-all hover:bg-fuchsia-700/20"
+                      spy={true}
+                      offset={-76} // navbar height, যাতে ঠিক ঠিক যায় scroll
+                      onSetActive={handleSetActive}
+                      className={`text-base px-4 py-2 rounded-md transition-all hover:bg-fuchsia-700/20 cursor-pointer ${activeSection === path ? "text-purple-400 font-semibold" : ""
+                        }`}
                     >
-                      {item.name}
+                      {name}
                     </Link>
                   </li>
                 ))}
@@ -199,12 +114,16 @@ const Navbar = () => {
 
             {/* Logo */}
             <div>
-              <Link to="home" smooth={true} duration={500}>
-                <img
-                  src={logo}
-                  alt="logo"
-                  className="h-12 md:h-14 cursor-pointer"
-                />
+              <Link
+                to="home"
+                smooth={true}
+                duration={500}
+                spy={true}
+                offset={-76}
+                onSetActive={handleSetActive}
+                className="cursor-pointer"
+              >
+                <img src={logo} alt="logo" className="h-12 md:h-14" />
               </Link>
             </div>
 
@@ -217,10 +136,12 @@ const Navbar = () => {
                       to={path}
                       smooth={true}
                       duration={500}
-                      className={`py-3 px-4 cursor-pointer 
-                        ${activeSection === path
-                          ? "border-b text-white shadow-md"
-                          : "hover:border-b "
+                      spy={true}
+                      offset={-76}
+                      onSetActive={handleSetActive}
+                      className={`py-3 px-4 cursor-pointer ${activeSection === path
+                        ? "border-b-2 border-purple-400 text-white font-semibold shadow-md"
+                        : "hover:border-b-2 hover:border-purple-400"
                         }`}
                     >
                       {name}
