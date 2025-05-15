@@ -4,7 +4,7 @@ import { MdFileDownload } from "react-icons/md";
 import { Link } from "react-scroll";
 import { VscGithubProject } from "react-icons/vsc";
 import { RiTailwindCssFill } from "react-icons/ri";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import logo from "../../../assets/logo/name-logo.svg";
@@ -12,12 +12,18 @@ import TypingAnimation from "./TypingText";
 import Lottie from "react-lottie";
 import Anondo from '../../../assets/Image/Anondo.png';
 import bg from "../../../assets/Image/lottie.json";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 
 const Banner = () => {
   useEffect(() => {
     Aos.init({ once: true, offset: 200, duration: 1500 });
+  }, []);
+
+  const [hue, setHue] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHue((prev) => (prev + 10) % 360);
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const socialLinks = [
@@ -86,17 +92,9 @@ const Banner = () => {
             className="flex flex-row gap-6 items-center"
           >
             {socialLinks.map(({ link, icon, label }, i) => (
-              <motion.li
+              <li
                 key={i}
-                initial={{ y: 0 }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.2,
-                }}
-                className="cursor-pointer transition"
+                className="cursor-pointer transition transform hover:-translate-y-2 duration-500"
               >
                 <a
                   href={link}
@@ -107,7 +105,7 @@ const Banner = () => {
                 >
                   <span className="group-hover:text-blue-500">{icon}</span>
                 </a>
-              </motion.li>
+              </li>
             ))}
           </ul>
 
@@ -145,13 +143,15 @@ const Banner = () => {
           data-aos="zoom-in"
           className="h-full w-full flex justify-center items-center px-4 relative"
         >
-          <motion.div
+          <div
             className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+            style={{ animation: "float 2.5s ease-in-out infinite" }}
           >
-            {/* Lottie Background Animation */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
+            {/* Lottie Background Animation with hue-rotate filter */}
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{ filter: `hue-rotate(${hue}deg)` }}
+            >
               <Lottie
                 options={{ animationData: bg, autoplay: true, loop: true }}
                 isClickToPauseDisabled={true}
@@ -166,39 +166,67 @@ const Banner = () => {
             />
 
             {/* React Icon */}
-            <motion.button
-              className="group p-2 absolute top-2 left-2 lg:top-4 lg:left-4 z-20"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+            <button
+              className="group p-2 absolute top-2 left-2 lg:top-4 lg:left-4 z-20 rotate-animation"
+              aria-label="React Icon"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-Glow/50 opacity-0 group-hover:opacity-80 transition duration-300 blur-xl -z-10" />
-                <FaReact className="text-6xl text-Accent group-hover:text-blue-500" />
+                <FaReact className="text-6xl text-blue-400 group-hover:text-blue-600 transition-colors duration-300" />
               </div>
-            </motion.button>
+            </button>
 
             {/* Tailwind Icon */}
-            <motion.button
-              className="group p-2 absolute bottom-2 right-2 lg:bottom-4 lg:right-4 z-20"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{
-                duration: 0.6,
-                repeat: Infinity,
-                repeatDelay: 2,
-                ease: "easeInOut",
-              }}
+            <button
+              className="group p-2 absolute bottom-2 right-2 lg:bottom-4 lg:right-4 z-20 scale-animation"
+              aria-label="Tailwind Icon"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-Glow/50 opacity-0 group-hover:opacity-80 transition duration-300 blur-xl -z-10" />
-                <RiTailwindCssFill className="text-6xl text-Accent group-hover:text-blue-500" />
+                <RiTailwindCssFill className="text-6xl text-teal-400 group-hover:text-teal-600 transition-colors duration-300" />
               </div>
-            </motion.button>
-          </motion.div>
-
+            </button>
+          </div>
         </div>
       </div>
 
+      <style jsx>{`
+        @keyframes rotate360 {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
 
+        @keyframes scalePulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.2);
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        .rotate-animation {
+          animation: rotate360 5s linear infinite;
+        }
+
+        .scale-animation {
+          animation: scalePulse 1.2s ease-in-out infinite;
+          animation-delay: 0.5s;
+        }
+      `}</style>
     </div>
   );
 };

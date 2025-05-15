@@ -3,19 +3,44 @@ import gsap from "gsap";
 
 const AnimatedBackground = () => {
   const bgRef = useRef(null);
-  const starsRef = useRef([]);
   const timeouts = useRef([]);
 
   useEffect(() => {
     const container = bgRef.current;
     if (!container) return;
 
-    starsRef.current = [];
+    // Mouse dot trail
+    const handleMouseMove = (e) => {
+      const dot = document.createElement("div");
+      Object.assign(dot.style, {
+        position: "absolute",
+        width: "4px",
+        height: "4px",
+        background: "aqua",
+        borderRadius: "50%",
+        top: `${e.clientY}px`,
+        left: `${e.clientX}px`,
+        pointerEvents: "none",
+        opacity: 0.8,
+        zIndex: 999,
+        transform: "translate(-50%, -50%)",
+        boxShadow: "0 0 6px aqua, 0 0 12px aqua",
+        transition: "opacity 0.5s ease-out",
+      });
+      container.appendChild(dot);
+      setTimeout(() => {
+        dot.style.opacity = "0";
+        setTimeout(() => container.removeChild(dot), 500);
+      }, 100);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // Stars setup
+    const stars = [];
     const centerXPercent = 50;
     const centerYPercent = 50;
 
-    // ১০০টা স্টার (আগের ৮০ এর জায়গায়)
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 80; i++) {
       const star = document.createElement("div");
       const size = Math.random() * 1.5 + 0.5;
       Object.assign(star.style, {
@@ -25,76 +50,46 @@ const AnimatedBackground = () => {
         borderRadius: "50%",
         top: `${centerYPercent}%`,
         left: `${centerXPercent}%`,
-        backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.6 + 0.4})`,
-        boxShadow: `0 0 ${Math.random() * 3 + 1}px rgba(255,255,255,0.8)`,
-        opacity: Math.random() * 0.5 + 0.5,
+        backgroundColor: "white",
+        opacity: Math.random() * 0.2 + 0.8, // 0.8 to 1.0 opacity for bright stars
         pointerEvents: "none",
-        transition: "top 3s ease, left 3s ease, opacity 3s ease",
       });
       container.appendChild(star);
-      starsRef.current.push(star);
+      stars.push(star);
+
+      // initial position around center
+      gsap.set(star, {
+        x: (Math.random() * window.innerWidth) - (window.innerWidth / 2),
+        y: (Math.random() * window.innerHeight) - (window.innerHeight / 2),
+      });
+
+      // animate star movement with bigger range and shorter duration
+      const animateStar = () => {
+        gsap.to(star, {
+          duration: Math.random() * 5 + 7, // 7-12 seconds (faster)
+          x: "+=" + (Math.random() * 300 - 150), // ±150px movement range
+          y: "+=" + (Math.random() * 300 - 150),
+          opacity: Math.random() * 0.2 + 0.8,
+          ease: "power1.inOut",
+          onComplete: animateStar,
+        });
+      };
+      animateStar();
     }
 
-    const scatterStars = () => {
-      starsRef.current.forEach((star) => {
-        const newTop = Math.random() * 80 + 10;
-        const newLeft = Math.random() * 80 + 10;
-        star.style.top = `${newTop}%`;
-        star.style.left = `${newLeft}%`;
-        star.style.opacity = Math.random() * 0.5 + 0.5;
-      });
-    };
-
-    const scatterTimeout = setTimeout(scatterStars, 200);
-    timeouts.current.push(scatterTimeout);
-
-    const animateStars = () => {
-      starsRef.current.forEach((star) => {
-        const currentTop = parseFloat(star.style.top);
-        const currentLeft = parseFloat(star.style.left);
-        const newTop = Math.min(90, Math.max(10, currentTop + (Math.random() * 4 - 2)));
-        const newLeft = Math.min(90, Math.max(10, currentLeft + (Math.random() * 4 - 2)));
-        star.style.top = `${newTop}%`;
-        star.style.left = `${newLeft}%`;
-        star.style.opacity = Math.random() * 0.5 + 0.5;
-      });
-    };
-
-    const starInterval = setInterval(animateStars, 3000);
-    timeouts.current.push(starInterval);
-
-    // নতুন: ছোট গ্লো পয়েন্টস যোগ করা
-    for (let i = 0; i < 20; i++) {
-      const glow = document.createElement("div");
-      const size = Math.random() * 6 + 4;
-      Object.assign(glow.style, {
-        position: "absolute",
-        width: `${size}px`,
-        height: `${size}px`,
-        borderRadius: "50%",
-        top: `${Math.random() * 90 + 5}%`,
-        left: `${Math.random() * 90 + 5}%`,
-        backgroundColor: "rgba(0, 255, 255, 0.3)",
-        filter: "blur(10px)",
-        pointerEvents: "none",
-        animation: `twinkle ${5 + Math.random() * 5}s ease-in-out infinite alternate`,
-      });
-      container.appendChild(glow);
-    }
-
+    // Shooting star
     const createShootingStar = () => {
       const star = document.createElement("div");
       Object.assign(star.style, {
         position: "absolute",
-        width: "120px",
-        height: "2.5px",
-        background: "linear-gradient(90deg, #a0eaff, transparent)",
+        width: "100px",
+        height: "2px",
+        background: "linear-gradient(90deg, white, transparent)",
         top: `${Math.random() * 60 + 10}%`,
         left: "-10%",
         opacity: 0.8,
         transform: "rotate(45deg)",
         pointerEvents: "none",
-        filter: "drop-shadow(0 0 6px #00f6ff)",
       });
       container.appendChild(star);
       gsap.to(star, {
@@ -105,11 +100,12 @@ const AnimatedBackground = () => {
         ease: "power2.out",
         onComplete: () => container.removeChild(star),
       });
-      const next = setTimeout(createShootingStar, Math.random() * 5000 + 3000);
+      const next = setTimeout(createShootingStar, Math.random() * 6000 + 3000);
       timeouts.current.push(next);
     };
     createShootingStar();
 
+    // Floating orbs
     for (let i = 0; i < 10; i++) {
       const orb = document.createElement("div");
       const size = Math.random() * 100 + 100;
@@ -117,8 +113,7 @@ const AnimatedBackground = () => {
         position: "absolute",
         width: `${size}px`,
         height: `${size}px`,
-        background:
-          "radial-gradient(circle, rgba(0,255,255,0.1), transparent)",
+        background: "radial-gradient(circle, rgba(0,255,255,0.07), transparent)",
         borderRadius: "50%",
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
@@ -129,32 +124,9 @@ const AnimatedBackground = () => {
       container.appendChild(orb);
     }
 
-    // নতুন: ছোট ছোট নীল টপ-লাইট পয়েন্টস (রাতের আকাশের রঙের সাথে মিল রেখে)
-    for (let i = 0; i < 20; i++) {
-      const lightDot = document.createElement("div");
-      const size = Math.random() * 3 + 1.5;
-      Object.assign(lightDot.style, {
-        position: "absolute",
-        width: `${size}px`,
-        height: `${size}px`,
-        borderRadius: "50%",
-        top: `${Math.random() * 90 + 5}%`,
-        left: `${Math.random() * 90 + 5}%`,
-        backgroundColor: "rgba(100, 200, 255, 0.4)",
-        boxShadow: `0 0 ${size * 2}px rgba(100, 200, 255, 0.7)`,
-        pointerEvents: "none",
-        animation: `twinkle ${4 + Math.random() * 6}s ease-in-out infinite alternate`,
-      });
-      container.appendChild(lightDot);
-    }
-
     return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
       timeouts.current.forEach(clearTimeout);
-      clearInterval(starInterval);
-      // ক্লিনআপ - পুরো কন্টেইনার থেকে নতুন এলিমেন্ট গুলো মুছে ফেলতে চাইলে এটা যোগ করতে পারো:
-      // while (container.firstChild) {
-      //   container.removeChild(container.firstChild);
-      // }
     };
   }, []);
 
@@ -163,8 +135,7 @@ const AnimatedBackground = () => {
       ref={bgRef}
       className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden"
       style={{
-        background:
-          "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
+        background: "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
         animation: "bgPulse 25s ease-in-out infinite",
         cursor: "none",
       }}
@@ -194,10 +165,6 @@ const AnimatedBackground = () => {
         @keyframes float {
           0% { transform: translateY(0px); }
           100% { transform: translateY(-30px); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 1; }
         }
         @keyframes aurora {
           0% { transform: rotate(0deg) scale(1); }

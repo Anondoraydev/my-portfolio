@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 
@@ -9,111 +7,127 @@ const WelcomePage = () => {
   useEffect(() => {
     const fadeTimer = setTimeout(() => {
       setHide(true);
-    }, 5000);
-
-    return () => {
-      clearTimeout(fadeTimer);
-    };
+    }, 7000);
+    return () => clearTimeout(fadeTimer);
   }, []);
+
+  const bubbles = Array(30).fill(0);
 
   return (
     <div
-      className={`fixed top-0 left-0 z-[999] h-screen w-screen flex items-center justify-center transition-opacity duration-1000 ${
-        hide ? "opacity-0 pointer-events-none" : "opacity-100"
-      } `}
+      className={`fixed top-0 left-0 z-[999] h-screen w-screen flex items-center justify-center transition-opacity duration-1000 ${hide ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
     >
-      <div className="relative w-full h-full bg-black text-white flex justify-center items-center">
-        <div className="absolute inset-0 z-0">
-          {/* Gradient Motion Layers */}
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "40vw",
-              height: "40vw",
-              background:
-                "linear-gradient(40deg, rgba(128, 0, 255, 0.01), rgba(102, 0, 204, 0.01))",
-              top: "-10%",
-              left: "-10%",
-              animation: "moveGradient1 15s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "45vw",
-              height: "45vw",
-              background:
-                "linear-gradient(40deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))",
-
-              bottom: "-20%",
-              right: "-10%",
-              animation: "moveGradient2 18s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "30vw",
-              height: "30vw",
-              background:
-                "radial-gradient(circle, rgba(102, 126, 234, 0.15), transparent 70%)",
-              top: "60%",
-              left: "20%",
-              animation: "moveGradient3 20s ease-in-out infinite alternate",
-            }}
-          />
-
-          {/* Radial center glow */}
-          <div
-            className="absolute w-[40vw] h-[40vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%)",
-            }}
-          />
-
-          {/* Grid lines */}
-          <div className="absolute inset-0 z-10 bg-[length:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]" />
-
-          {/* Noise texture */}
-          <div
-            className="absolute inset-0 z-10 opacity-5"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="text-center space-y-6 px-6"
+      <div className="relative w-full h-full overflow-hidden text-white flex justify-center items-center bg-gradient-to-tr from-blue-900 via-indigo-900 to-black">
+        {/* Wave Animated SVG Background */}
+        <svg
+          className="absolute inset-0 w-full h-full -z-10"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.h1
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 1 }}
-            style={{ WebkitTextStroke: "1px white" }}
-            className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-center tracking-wide text-purple-500/10"
+          <path
+            fill="#1e40af"
+            fillOpacity="0.7"
+            d="M0,64L48,101.3C96,139,192,213,288,224C384,235,480,181,576,144C672,107,768,85,864,85.3C960,85,1056,107,1152,117.3C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           >
-            <Typewriter words={["<Hello World! />..."]} />
-          </motion.h1>
+            <animate
+              attributeName="d"
+              dur="10s"
+              repeatCount="indefinite"
+              values="
+                M0,64L48,101.3C96,139,192,213,288,224C384,235,480,181,576,144C672,107,768,85,864,85.3C960,85,1056,107,1152,117.3C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
 
-          <motion.h2
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="text-xl md:text-3xl font-semibold text-center text-white"
-          >
+                M0,96L48,90.7C96,85,192,75,288,74.7C384,75,480,85,576,117.3C672,149,768,203,864,197.3C960,192,1056,128,1152,117.3C1248,107,1344,149,1392,170.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z;
+
+                M0,64L48,101.3C96,139,192,213,288,224C384,235,480,181,576,144C672,107,768,85,864,85.3C960,85,1056,107,1152,117.3C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z
+              "
+            />
+          </path>
+        </svg>
+
+        {/* Floating bubbles background */}
+        <div className="absolute inset-0 -z-20 overflow-hidden">
+          {bubbles.map((_, i) => {
+            const size = Math.random() * 80 + 20; // 20px থেকে 100px পর্যন্ত
+            const left = Math.random() * 100; // %left
+            const delay = Math.random() * 20; // seconds
+            const duration = 15 + Math.random() * 15; // seconds
+            const opacity = 0.1 + Math.random() * 0.3;
+
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full bg-purple-400"
+                style={{
+                  width: size,
+                  height: size,
+                  left: `${left}%`,
+                  bottom: `-120px`,
+                  opacity: opacity,
+                  animation: `floatUp ${duration}s ease-in-out infinite`,
+                  animationDelay: `${delay}s`,
+                  filter: "blur(8px)",
+                }}
+              />
+            );
+          })}
+        </div>
+
+        {/* Center content */}
+        <div className="relative z-10 text-center px-8 py-10 backdrop-blur-md bg-white/10 border border-white/20 rounded-3xl shadow-lg max-w-3xl mx-auto space-y-6">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 animate-text-gradient">
+            <Typewriter words={["<Hello World! />"]} />
+          </h1>
+
+          <h2 className="text-xl md:text-3xl font-semibold text-white/80">
             <Typewriter
               words={["Welcome to my Portfolio."]}
               loop={1}
-              typeSpeed={100}
-              deleteSpeed={60}
-              delaySpeed={1500}
+              typeSpeed={80}
+              deleteSpeed={50}
+              delaySpeed={1200}
             />
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
+
+        {/* CSS Animations */}
+        <style>{`
+          @keyframes floatUp {
+            0% {
+              transform: translateY(0) scale(1);
+              opacity: 0;
+            }
+            10% {
+              opacity: 0.3;
+            }
+            50% {
+              opacity: 0.2;
+            }
+            90% {
+              opacity: 0;
+              transform: translateY(-120vh) scale(1.2);
+            }
+            100% {
+              opacity: 0;
+              transform: translateY(-120vh) scale(1.2);
+            }
+          }
+
+          @keyframes text-gradient {
+            0%, 100% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+          }
+
+          .animate-text-gradient {
+            background-size: 200% 200%;
+            animation: text-gradient 5s ease infinite;
+          }
+        `}</style>
       </div>
     </div>
   );
