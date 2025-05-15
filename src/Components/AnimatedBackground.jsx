@@ -2,194 +2,238 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const AnimatedBackground = () => {
-  const particlesRef = useRef(null);
+  const bgRef = useRef(null);
+  const starsRef = useRef([]);
+  const timeouts = useRef([]);
 
   useEffect(() => {
-    const particlesContainer = particlesRef.current;
-    if (!particlesContainer) return;
+    const container = bgRef.current;
+    if (!container) return;
 
-    const particleCount = 20;
+    starsRef.current = [];
+    const centerXPercent = 50;
+    const centerYPercent = 50;
 
-    const createParticle = () => {
-      const particle = document.createElement("div");
-      const size = Math.random() * 2 + 1;
-
-      Object.assign(particle.style, {
-        width: `${size}px`,
-        height: `${size}px`,
+    // ১০০টা স্টার (আগের ৮০ এর জায়গায়)
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      const size = Math.random() * 1.5 + 0.5;
+      Object.assign(star.style, {
         position: "absolute",
-        borderRadius: "9999px",
-        backgroundColor: "#fff",
-        pointerEvents: "none",
-        opacity: "0",
-      });
-
-      particlesContainer.appendChild(particle);
-      animateParticle(particle);
-    };
-
-    const resetParticle = (particle) => {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      Object.assign(particle.style, {
-        left: `${x}%`,
-        top: `${y}%`,
-        opacity: "0",
-      });
-      return { x, y };
-    };
-
-    const animateParticle = (particle) => {
-      const { x, y } = resetParticle(particle);
-      const duration = Math.random() * 10 + 10;
-      const delay = Math.random() * 5;
-
-      setTimeout(() => {
-        const moveX = x + (Math.random() * 20 - 10);
-        const moveY = y - Math.random() * 30;
-
-        Object.assign(particle.style, {
-          transition: `all ${duration}s linear`,
-          opacity: Math.random() * 0.3 + 0.1,
-          left: `${moveX}%`,
-          top: `${moveY}%`,
-        });
-
-        setTimeout(() => animateParticle(particle), duration * 1000);
-      }, delay * 1000);
-    };
-
-    // Create background particles
-    for (let i = 0; i < particleCount; i++) createParticle();
-
-    // Debounced Mouse Particle Effect
-    let lastTime = 0;
-    const mouseHandler = (e) => {
-      const now = Date.now();
-      if (now - lastTime < 100) return; // Only allow every 100ms
-      lastTime = now;
-
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-      const particle = document.createElement("div");
-      const size = Math.random() * 6 + 4;
-
-      const colors = ["#00ffff", "#ff00ff", "#00ff99", "#ffcc00", "#ffffff"];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-
-      Object.assign(particle.style, {
         width: `${size}px`,
         height: `${size}px`,
-        position: "fixed",
-        left: `${mouseX}px`,
-        top: `${mouseY}px`,
         borderRadius: "50%",
-        background: `radial-gradient(circle, ${color}, transparent 70%)`,
-        opacity: 0.6,
+        top: `${centerYPercent}%`,
+        left: `${centerXPercent}%`,
+        backgroundColor: `rgba(255, 255, 255, ${Math.random() * 0.6 + 0.4})`,
+        boxShadow: `0 0 ${Math.random() * 3 + 1}px rgba(255,255,255,0.8)`,
+        opacity: Math.random() * 0.5 + 0.5,
         pointerEvents: "none",
-        filter: "blur(3px)",
-        transform: "translate(-50%, -50%)",
-        zIndex: "1",
+        transition: "top 3s ease, left 3s ease, opacity 3s ease",
       });
+      container.appendChild(star);
+      starsRef.current.push(star);
+    }
 
-      particlesContainer.appendChild(particle);
-
-      gsap.to(particle, {
-        scale: 1.8,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        onComplete: () => {
-          if (particlesContainer.contains(particle)) {
-            particlesContainer.removeChild(particle);
-          }
-        },
+    const scatterStars = () => {
+      starsRef.current.forEach((star) => {
+        const newTop = Math.random() * 80 + 10;
+        const newLeft = Math.random() * 80 + 10;
+        star.style.top = `${newTop}%`;
+        star.style.left = `${newLeft}%`;
+        star.style.opacity = Math.random() * 0.5 + 0.5;
       });
     };
 
-    document.addEventListener("mousemove", mouseHandler);
-    return () => document.removeEventListener("mousemove", mouseHandler);
+    const scatterTimeout = setTimeout(scatterStars, 200);
+    timeouts.current.push(scatterTimeout);
+
+    const animateStars = () => {
+      starsRef.current.forEach((star) => {
+        const currentTop = parseFloat(star.style.top);
+        const currentLeft = parseFloat(star.style.left);
+        const newTop = Math.min(90, Math.max(10, currentTop + (Math.random() * 4 - 2)));
+        const newLeft = Math.min(90, Math.max(10, currentLeft + (Math.random() * 4 - 2)));
+        star.style.top = `${newTop}%`;
+        star.style.left = `${newLeft}%`;
+        star.style.opacity = Math.random() * 0.5 + 0.5;
+      });
+    };
+
+    const starInterval = setInterval(animateStars, 3000);
+    timeouts.current.push(starInterval);
+
+    // নতুন: ছোট গ্লো পয়েন্টস যোগ করা
+    for (let i = 0; i < 20; i++) {
+      const glow = document.createElement("div");
+      const size = Math.random() * 6 + 4;
+      Object.assign(glow.style, {
+        position: "absolute",
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: "50%",
+        top: `${Math.random() * 90 + 5}%`,
+        left: `${Math.random() * 90 + 5}%`,
+        backgroundColor: "rgba(0, 255, 255, 0.3)",
+        filter: "blur(10px)",
+        pointerEvents: "none",
+        animation: `twinkle ${5 + Math.random() * 5}s ease-in-out infinite alternate`,
+      });
+      container.appendChild(glow);
+    }
+
+    const createShootingStar = () => {
+      const star = document.createElement("div");
+      Object.assign(star.style, {
+        position: "absolute",
+        width: "120px",
+        height: "2.5px",
+        background: "linear-gradient(90deg, #a0eaff, transparent)",
+        top: `${Math.random() * 60 + 10}%`,
+        left: "-10%",
+        opacity: 0.8,
+        transform: "rotate(45deg)",
+        pointerEvents: "none",
+        filter: "drop-shadow(0 0 6px #00f6ff)",
+      });
+      container.appendChild(star);
+      gsap.to(star, {
+        x: "140vw",
+        y: "140vh",
+        opacity: 0,
+        duration: 1.5,
+        ease: "power2.out",
+        onComplete: () => container.removeChild(star),
+      });
+      const next = setTimeout(createShootingStar, Math.random() * 5000 + 3000);
+      timeouts.current.push(next);
+    };
+    createShootingStar();
+
+    for (let i = 0; i < 10; i++) {
+      const orb = document.createElement("div");
+      const size = Math.random() * 100 + 100;
+      Object.assign(orb.style, {
+        position: "absolute",
+        width: `${size}px`,
+        height: `${size}px`,
+        background:
+          "radial-gradient(circle, rgba(0,255,255,0.1), transparent)",
+        borderRadius: "50%",
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        pointerEvents: "none",
+        filter: "blur(40px)",
+        animation: `float ${Math.random() * 20 + 10}s ease-in-out infinite alternate`,
+      });
+      container.appendChild(orb);
+    }
+
+    // নতুন: ছোট ছোট নীল টপ-লাইট পয়েন্টস (রাতের আকাশের রঙের সাথে মিল রেখে)
+    for (let i = 0; i < 20; i++) {
+      const lightDot = document.createElement("div");
+      const size = Math.random() * 3 + 1.5;
+      Object.assign(lightDot.style, {
+        position: "absolute",
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: "50%",
+        top: `${Math.random() * 90 + 5}%`,
+        left: `${Math.random() * 90 + 5}%`,
+        backgroundColor: "rgba(100, 200, 255, 0.4)",
+        boxShadow: `0 0 ${size * 2}px rgba(100, 200, 255, 0.7)`,
+        pointerEvents: "none",
+        animation: `twinkle ${4 + Math.random() * 6}s ease-in-out infinite alternate`,
+      });
+      container.appendChild(lightDot);
+    }
+
+    return () => {
+      timeouts.current.forEach(clearTimeout);
+      clearInterval(starInterval);
+      // ক্লিনআপ - পুরো কন্টেইনার থেকে নতুন এলিমেন্ট গুলো মুছে ফেলতে চাইলে এটা যোগ করতে পারো:
+      // while (container.firstChild) {
+      //   container.removeChild(container.firstChild);
+      // }
+    };
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen -z-50 pointer-events-none">
-      <div className="relative w-full h-full bg-black font-sans">
-        <div className="absolute inset-0">
-          {/* Gradient Layers */}
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "35vw",
-              height: "35vw",
-              background: "linear-gradient(40deg, #06010d, rgba(102, 0, 204, 0.02))",
-              top: "-10%",
-              left: "-10%",
-              animation: "moveGradient1 12s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "40vw",
-              height: "40vw",
-              background: "linear-gradient(40deg, #06010d, rgba(118, 75, 162, 0.08))",
-              bottom: "-20%",
-              right: "-10%",
-              animation: "moveGradient2 16s ease-in-out infinite alternate",
-            }}
-          />
-          <div
-            className="absolute rounded-full blur-3xl"
-            style={{
-              width: "25vw",
-              height: "25vw",
-              background: "radial-gradient(circle, #06010d, transparent 70%)",
-              top: "60%",
-              left: "20%",
-              animation: "moveGradient3 20s ease-in-out infinite alternate",
-            }}
-          />
-
-          {/* Radial Glow */}
-          <div
-            className="absolute w-[30vw] h-[30vh] top-1/2 left-1/2 -z-50 -translate-x-1/2 -translate-y-1/2 blur-3xl"
-            style={{
-              background: "radial-gradient(circle, rgba(72, 0, 255, 0.15), transparent 70%)",
-            }}
-          />
-
-          {/* Grid Lines */}
-          <div className="absolute inset-0 bg-[length:40px_40px] -z-50 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)]" />
-
-          {/* Particles */}
-          <div
-            ref={particlesRef}
-            className="absolute inset-0 pointer-events-none"
-          />
-
-          {/* Noise */}
-          <div
-            className="absolute inset-0 opacity-5 -z-50"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
+    <div
+      ref={bgRef}
+      className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
+        animation: "bgPulse 25s ease-in-out infinite",
+        cursor: "none",
+      }}
+    >
+      {/* Aurora Light */}
+      <div className="absolute w-full h-full mix-blend-screen">
+        <div className="absolute w-[200%] h-[200%] bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-sky-500 opacity-10 blur-3xl animate-aurora"></div>
       </div>
 
-      {/* Animation Keyframes */}
+      {/* Grid Layer */}
+      <div className="absolute w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-mosaic.png')] opacity-5 animate-slow-pan mix-blend-overlay"></div>
+
+      {/* Nebula Cloud */}
+      <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.03),_transparent_60%)] blur-2xl animate-cloud"></div>
+
+      {/* Galaxy Swirl */}
+      <div className="absolute w-full h-full bg-[radial-gradient(circle,_rgba(0,200,255,0.04),_transparent_70%)] animate-rotate-slow blur-3xl mix-blend-soft-light"></div>
+
+      {/* Lens Flare */}
+      <div className="absolute w-full h-1 blur-3xl bg-gradient-to-r from-transparent via-white to-transparent opacity-5 animate-lensflare"></div>
+
       <style>{`
-        @keyframes moveGradient1 {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        @keyframes bgPulse {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.1); }
         }
-        @keyframes moveGradient2 {
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          100% { transform: translateY(-30px); }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 1; }
+        }
+        @keyframes aurora {
+          0% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(180deg) scale(1.1); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+        @keyframes cloud {
           0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
+          100% { transform: translateY(-20px); }
         }
-        @keyframes moveGradient3 {
-          0% { transform: translate(0, 0); }
-          100% { transform: translate(-30%, -30%); }
+        @keyframes lensflare {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes slow-pan {
+          0% { background-position: 0 0; }
+          100% { background-position: 100% 100%; }
+        }
+        @keyframes rotate-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-aurora {
+          animation: aurora 40s linear infinite;
+        }
+        .animate-cloud {
+          animation: cloud 30s ease-in-out infinite alternate;
+        }
+        .animate-lensflare {
+          animation: lensflare 8s linear infinite;
+        }
+        .animate-slow-pan {
+          animation: slow-pan 60s linear infinite;
+        }
+        .animate-rotate-slow {
+          animation: rotate-slow 100s linear infinite;
         }
       `}</style>
     </div>

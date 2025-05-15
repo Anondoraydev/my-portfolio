@@ -24,36 +24,19 @@ const Navbar = () => {
     { name: "Contact", path: "contact", icon: <IoMailUnreadOutline /> },
   ];
 
-  // Section observer for active nav link highlighting
   useEffect(() => {
-    const sections = document.querySelectorAll("[data-section]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-
     Aos.init({ once: false, delay: 300, duration: 1500 });
-
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
-  // Scroll listener to show/hide navbar on scroll up/down
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-        // Scroll down → hide navbar
+      if (currentScrollY > 50 && currentScrollY > lastScrollY.current) {
+        // নিচে scroll করলে এবং ৫০px এর বেশি scroll করলে navbar hide করো
         setShowNavbar(false);
       } else {
-        // Scroll up → show navbar
+        // উপরে scroll করলে navbar দেখাও
         setShowNavbar(true);
       }
 
@@ -62,23 +45,24 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  // ক্লিক করলে activeSection সেট করার জন্য (optional)
   const handleSetActive = (to) => {
     setActiveSection(to);
-    setOpen(false); // মোবাইল মেনু ক্লোজ করার জন্য
+    setOpen(false);
   };
 
   return (
     <div className="h-[76px]">
       <div
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${showNavbar ? "translate-y-0 h-[76px]" : "-translate-y-full h-0"
+        className={`fixed top-0 left-0 w-full z-50 transition-transform duration-500 ease-in-out ${showNavbar ? "translate-y-0" : "-translate-y-full"
           }`}
       >
         <nav className="my-4 rounded-2xl backdrop-blur-xl max-w-7xl w-11/12 mx-auto duration-300">
-          <div className="flex items-center justify-between py-2 px-6 rounded-[14px] bg-gradient-to-r from-[#1f1f2e]/80 via-[#2b1b36]/80 to-[#1f1f2e]/80 shadow-md shadow-purple-800/20 backdrop-blur-md relative transition-all duration-500 ease-in-out">
+          <div className="flex items-center justify-between py-2 px-6 rounded-[14px] bg-gradient-to-r from-[#1f1f2e]/80 via-[#2b1b36]/80 to-[#1f1f2e]/80 shadow-md shadow-purple-800/20 backdrop-blur-md relative">
             {/* Mobile Menu */}
             <div
               className={`absolute left-0 w-full z-50 bg-gradient-to-r from-[#1f1f2e] via-[#2b1b36] to-[#1f1f2e] backdrop-blur-2xl text-white rounded-xl duration-500 ${open ? "top-0" : "-top-96"
@@ -86,10 +70,7 @@ const Navbar = () => {
             >
               <ul className="flex flex-col p-6 space-y-4 relative">
                 <div className="absolute top-4 right-4 text-xl z-10">
-                  <button
-                    onClick={() => setOpen(false)}
-                    className="btn btn-sm cursor-pointer"
-                  >
+                  <button onClick={() => setOpen(false)} className="btn btn-sm cursor-pointer">
                     <X />
                   </button>
                 </div>
@@ -100,7 +81,7 @@ const Navbar = () => {
                       smooth={true}
                       duration={500}
                       spy={true}
-                      offset={-76} // navbar height, যাতে ঠিক ঠিক যায় scroll
+                      offset={-76}
                       onSetActive={handleSetActive}
                       className={`text-base px-4 py-2 rounded-md transition-all hover:bg-fuchsia-700/20 cursor-pointer ${activeSection === path ? "text-purple-400 font-semibold" : ""
                         }`}
@@ -140,8 +121,8 @@ const Navbar = () => {
                       offset={-76}
                       onSetActive={handleSetActive}
                       className={`py-3 px-4 cursor-pointer ${activeSection === path
-                        ? "border-b-2 border-purple-400 text-white font-semibold shadow-md"
-                        : "hover:border-b-2 hover:border-purple-400"
+                          ? "border-b-2 border-purple-400 text-white font-semibold shadow-md"
+                          : "hover:border-b-2 hover:border-purple-400"
                         }`}
                     >
                       {name}
@@ -162,10 +143,7 @@ const Navbar = () => {
                 Resume
                 <span className="buttonAnimationColor group-hover:-top-4 "></span>
               </a>
-              <button
-                onClick={() => setOpen(true)}
-                className="text-xl lg:hidden text-fuchsia-200 btn"
-              >
+              <button onClick={() => setOpen(true)} className="text-xl lg:hidden text-fuchsia-200 btn">
                 <RiMenu2Fill />
               </button>
             </div>

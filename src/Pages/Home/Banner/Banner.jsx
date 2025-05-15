@@ -10,7 +10,7 @@ import "aos/dist/aos.css";
 import logo from "../../../assets/logo/name-logo.svg";
 import TypingAnimation from "./TypingText";
 import Lottie from "react-lottie";
-// import Anondo from '../../../assets/Image/Anondo.png';
+import Anondo from '../../../assets/Image/Anondo.png';
 import bg from "../../../assets/Image/lottie.json";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -39,7 +39,7 @@ const Banner = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-0 text-white">
+    <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-10 text-white">
       {/* Left Content */}
       <div className="flex flex-1 justify-start items-center relative z-60">
         <div className="space-y-6 lg:space-y-8">
@@ -146,7 +146,7 @@ const Banner = () => {
           className="h-full w-full flex justify-center items-center px-4 relative"
         >
           <motion.div
-            className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30"
+            className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
           >
@@ -159,11 +159,11 @@ const Banner = () => {
             </div>
 
             {/* Centered Image Over Animation */}
-            {/* <img
+            <img
               src={Anondo}
               alt="Anondo"
               className="relative z-10 w-[80%] h-[80%] object-contain rounded-full"
-            /> */}
+            />
 
             {/* React Icon */}
             <motion.button
@@ -194,6 +194,7 @@ const Banner = () => {
               </div>
             </motion.button>
           </motion.div>
+
         </div>
       </div>
 
