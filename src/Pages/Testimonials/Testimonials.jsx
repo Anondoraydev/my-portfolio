@@ -2,70 +2,52 @@ import { X } from "lucide-react";
 import Title from "../../Components/Shared/Title";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
 import Slider from "react-slick";
 import user from "../../assets/logo/user.png";
-// import ColorPlates from "../../Components/ColorPlates";
 
 const Testimonials = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", overview: "" });
 
+  useEffect(() => {
+    const savedFeedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+    setFeedbacks(savedFeedbacks);
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { name, overview } = formData;
+
     if (!name || !overview) {
       toast.warn("Please fill out all fields.");
       return;
     }
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/postReview`,
-        formData
-      );
+    const newFeedback = {
+      name,
+      overview,
+      createdAt: new Date().toISOString(),
+    };
 
-      if (res.data?.insertedId) {
-        toast.success("Thanks for your feedback!", {
-          style: {
-            background: "linear-gradient(to right, #4b0082, #8a2be2)",
-            color: "#fff",
-          },
-        });
-        fetchFeedbacks();
-        setFormData({ name: "", overview: "" });
-        setOpen(false);
-      }
-    } catch (error) {
-      console.error("Failed to submit feedback:", error);
-      toast.error("Something went wrong. Please try again later.");
-    }
+    const updatedFeedbacks = [newFeedback, ...feedbacks];
+    setFeedbacks(updatedFeedbacks);
+    localStorage.setItem("feedbacks", JSON.stringify(updatedFeedbacks));
+
+    toast.success("Thanks for your feedback!", {
+      style: {
+        background: "linear-gradient(to right, #4b0082, #8a2be2)",
+        color: "#fff",
+      },
+    });
+
+    setFormData({ name: "", overview: "" });
+    setOpen(false);
   };
-
-  const fetchFeedbacks = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/reviews`);
-      const data = res.data;
-      if (Array.isArray(data)) {
-        setFeedbacks(data);
-      } else if (Array.isArray(data.reviews)) {
-        setFeedbacks(data.reviews);
-      } else {
-        setFeedbacks([]);
-      }
-    } catch (error) {
-      console.error("Failed to fetch testimonials:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchFeedbacks();
-  }, []);
 
   const sliderSettings = {
     dots: true,
@@ -76,8 +58,6 @@ const Testimonials = () => {
     autoplay: true,
     autoplaySpeed: 5000,
     arrows: false,
-    dotsClass: "slick-dots slick-thumb",
-    dotsClassActive: "slick-active",
     responsive: [
       {
         breakpoint: 1024,
@@ -96,8 +76,8 @@ const Testimonials = () => {
         title="Testimonials"
         des="I'd love to hear your thoughts. Feel free to leave honest feedback!"
       />
-      {/* <ColorPlates /> */}
-      {/* Feedback Modal */}
+
+      {/* Modal */}
       {open && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
           <form
@@ -142,7 +122,7 @@ const Testimonials = () => {
         </div>
       )}
 
-      {/* Feedback Slider */}
+      {/* Feedback Display */}
       <div className="mt-8">
         {feedbacks.length > 0 ? (
           <Slider {...sliderSettings}>
@@ -177,7 +157,7 @@ const Testimonials = () => {
         )}
       </div>
 
-      {/* Give Feedback Button */}
+      {/* Button */}
       <div
         data-aos="fade-up"
         data-aos-anchor-placement="top-bottom"

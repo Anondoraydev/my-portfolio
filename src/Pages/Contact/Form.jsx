@@ -1,115 +1,81 @@
-import axios from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useRef } from "react";
+import emailjs from "emailjs-com";
 
 const Form = () => {
-  const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const form = useRef();
 
-  const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/send-email`,
-        data
-      );
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-      if (res.status === 200) {
-        toast.success("Email sent successfully!", {
-          style: {
-            background: "linear-gradient(to top right, #48284d, #8d13a0)",
-            color: "#ffffff",
-          },
-        });
-        reset();
-      } else {
-        toast.error("Failed to send email.", {
-          style: {
-            background: "linear-gradient(to top right, #48284d, #8d13a0)",
-            color: "#ffffff",
-          },
-        });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Something went wrong.", {
-        style: {
-          background: "linear-gradient(to top right, #48284d, #8d13a0)",
-          color: "#ffffff",
+    emailjs
+      .sendForm(
+        "service_fqkd9nc",      // তোমার EmailJS service ID
+        "template_dkna4ep",     // তোমার template ID
+        form.current,
+        "uJH1KGbqm6frzkLXJ"     // তোমার public key
+      )
+      .then(
+        () => {
+          alert("✅ Message sent successfully!");
+          form.current.reset();
         },
-      });
-    }
-    setLoading(false);
+        () => {
+          alert("❌ Failed to send message. Please try again.");
+        }
+      );
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Your Name"
-          {...register("name", { required: "Name is required" })}
-          className="w-full py-2 px-4 text-xs lg:text-sm border border-fuchsia-600/50 focus:outline focus:outline-fuchsia-600/50 rounded-lg bg-transparent text-white"
-        />
-        {errors.name && (
-          <p className="text-red-500 text-xs">{errors.name.message}</p>
-        )}
-
-        <input
-          type="email"
-          placeholder="Your Email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^\S+@\S+\.\S+$/,
-              message: "Invalid email address",
-            },
-          })}
-          className="w-full py-2 px-4 border border-fuchsia-600/30 focus:outline-2 focus:outline-fuchsia-600/50 rounded-lg bg-transparent text-white"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-xs">{errors.email.message}</p>
-        )}
-
-        <textarea
-          rows="4"
-          placeholder="Your Message"
-          {...register("message", { required: "Message is required" })}
-          className="w-full py-2 px-4 border border-fuchsia-600/30 focus:outline-2 focus:outline-fuchsia-600/50 rounded-lg bg-transparent text-white"
-        ></textarea>
-        {errors.message && (
-          <p className="text-red-500 text-xs">{errors.message.message}</p>
-        )}
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={loading}
-            className={`buttonClass group justify-end ${
-              loading
-                ? "opacity-50 cursor-not-allowed pointer-events-none border-fuchsia-500/20"
-                : ""
-            }`}
-          >
-            {loading ? (
-              <div className="flex items-center justify-center flex-row gap-2">
-                Sending{" "}
-                <span className="loading loading-dots loading-md"></span>
-              </div>
-            ) : (
-              "Send Message"
-            )}
-            <span className="buttonAnimationColor"></span>
-          </button>
-        </div>
-      </form>
-    </div>
+    <form
+      ref={form}
+      onSubmit={sendEmail}
+      className="space-y-8 w-[90%] md:w-full mx-auto text-white"
+    >
+      <input
+        type="text"
+        name="user_name"
+        placeholder="Your Name"
+        className="w-full h-11 px-4 rounded-xl border border-fuchsia-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 text-sm"
+        required
+      />
+      <input
+        type="email"
+        name="user_email"
+        placeholder="Your Email"
+        className="w-full h-10 px-4 rounded-xl border border-fuchsia-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 text-sm"
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="Your Message"
+        rows="5"
+        className="w-full px-4 py-3 rounded-xl border border-fuchsia-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-fuchsia-500 text-sm"
+        required
+      ></textarea>
+      <div className="flex justify-end ">
+        <button
+          className="buttonClass group"
+        >
+          Send Message
+          <span className="buttonAnimationColor group-hover:-top-4"></span>
+        </button>
+      </div>
+      {/* Extra Animations */}
+      <style jsx>{`
+        @keyframes rotate360 {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+ 
+        .buttonAnimationColor {
+          @apply absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300;
+        }
+      `}</style>
+    </form>
   );
 };
 

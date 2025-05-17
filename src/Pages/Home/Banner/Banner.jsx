@@ -1,16 +1,18 @@
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
 import { LuLinkedin, LuFacebook, LuGithub } from "react-icons/lu";
 import { MdFileDownload } from "react-icons/md";
 import { Link } from "react-scroll";
 import { VscGithubProject } from "react-icons/vsc";
 import { RiTailwindCssFill } from "react-icons/ri";
-import { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import Lottie from "react-lottie";
+
 import logo from "../../../assets/logo/name-logo.svg";
 import TypingAnimation from "./TypingText";
-import Lottie from "react-lottie";
-import Anondo from '../../../assets/Image/Anondo.png';
+import Anondo from "../../../assets/Image/Anondo.png";
 import bg from "../../../assets/Image/lottie.json";
 
 const Banner = () => {
@@ -48,7 +50,7 @@ const Banner = () => {
   return (
     <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-10 text-white">
       {/* Left Content */}
-      <div className="flex flex-1 justify-start items-center relative z-60">
+      <div className="flex flex-1 justify-start items-center relative z-10">
         <div className="space-y-6 lg:space-y-8">
           <div
             style={{
@@ -93,20 +95,28 @@ const Banner = () => {
             className="flex flex-row gap-6 items-center"
           >
             {socialLinks.map(({ link, icon, label }, i) => (
-              <li
+              <motion.li
                 key={i}
-                className="cursor-pointer transition transform hover:-translate-y-2 duration-500"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -10, 0] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.3,
+                }}
+                className="cursor-pointer"
               >
                 <a
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-xl text-white inline-block p-2 rounded-xl border border-white/50 group"
+                  className="text-white inline-block p-2 rounded-xl border border-white hover:border-purple-400 hover:text-purple-400 transition-all duration-300"
                 >
-                  <span className="group-hover:text-blue-500">{icon}</span>
+                  {icon}
                 </a>
-              </li>
+              </motion.li>
             ))}
           </ul>
 
@@ -117,7 +127,7 @@ const Banner = () => {
             className="flex flex-row flex-wrap gap-4 md:gap-6 items-center my-4"
           >
             <a
-              href="https://drive.google.com/file/d/1aEbprNVoY7MN8Kw1yRA016RwrzCiEaC-/view?usp=sharing"
+              href="https://drive.google.com/file/d/1qRSADF-JFIjXiVWGD7wmunUomS4LjAcO/view?usp=sharing"
               target="_blank"
               className="buttonClass group"
             >
@@ -129,7 +139,7 @@ const Banner = () => {
               to="projects"
               smooth={true}
               duration={500}
-              className="buttonClass group"
+              className="buttonClass group cursor-pointer"
             >
               Projects <VscGithubProject className="text-xl" />
               <span className="buttonAnimationColor group-hover:-top-4"></span>
@@ -138,7 +148,7 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* Right Image and Animations */}
+      {/* Right Image and Animation */}
       <div className="flex flex-1 justify-center items-center h-full w-full relative my-6">
         <div
           data-aos="zoom-in"
@@ -148,7 +158,7 @@ const Banner = () => {
             className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30"
             style={{ animation: "float 2.5s ease-in-out infinite" }}
           >
-            {/* Lottie Background Animation with hue-rotate filter */}
+            {/* Lottie Background */}
             <div
               className="absolute inset-0 z-0 pointer-events-none"
               style={{ filter: `hue-rotate(${hue}deg)` }}
@@ -159,10 +169,10 @@ const Banner = () => {
               />
             </div>
 
-            {/* Centered Image Over Animation */}
+            {/* Center Image */}
             <img
               src={Anondo}
-              alt="Anondo"
+              alt="Anondo Ray"
               className="relative z-10 w-[80%] h-[80%] object-contain rounded-full"
             />
 
@@ -191,6 +201,7 @@ const Banner = () => {
         </div>
       </div>
 
+      {/* Extra Animations */}
       <style jsx>{`
         @keyframes rotate360 {
           0% {
@@ -202,7 +213,8 @@ const Banner = () => {
         }
 
         @keyframes scalePulse {
-          0%, 100% {
+          0%,
+          100% {
             transform: scale(1);
           }
           50% {
@@ -211,7 +223,8 @@ const Banner = () => {
         }
 
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {
@@ -226,6 +239,14 @@ const Banner = () => {
         .scale-animation {
           animation: scalePulse 1.2s ease-in-out infinite;
           animation-delay: 0.5s;
+        }
+
+        .buttonClass {
+          @apply relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600;
+        }
+
+        .buttonAnimationColor {
+          @apply absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300;
         }
       `}</style>
     </div>
