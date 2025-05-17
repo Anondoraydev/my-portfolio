@@ -92,6 +92,7 @@ const WelcomePage = () => {
         </div>
 
         {/* CSS Animations */}
+        
         <style>{`
           @keyframes floatUp {
             0% {
