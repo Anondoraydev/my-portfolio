@@ -6,6 +6,7 @@ const TypingAnimation = () => {
       <h1 className="text-2xl md:text-3xl lg:text-5xl font-medium">
         <p className="font-semibold">
           <Typewriter
+            
             words={[
               "MERN Stack Developer",
               "UI/UX Designer",
