@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
 import { LuLinkedin, LuFacebook, LuGithub } from "react-icons/lu";
@@ -39,13 +40,18 @@ const Banner = () => {
       label: "Github",
       link: "https://github.com/Anondoraydev",
     },
-    
     {
       icon: <LuFacebook />,
       label: "Facebook",
       link: "https://www.facebook.com/anondo554.0",
     },
   ];
+
+  const lottieOptions = {
+    animationData: bg,
+    loop: true,
+    autoplay: true,
+  };
 
   return (
     <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-10 text-white">
@@ -129,20 +135,21 @@ const Banner = () => {
             <a
               href="https://drive.google.com/file/d/1qRSADF-JFIjXiVWGD7wmunUomS4LjAcO/view?usp=sharing"
               target="_blank"
-              className="buttonClass group"
+              rel="noopener noreferrer"
+              className="relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600 group"
             >
               Resume <MdFileDownload className="text-xl" />
-              <span className="buttonAnimationColor group-hover:-top-4"></span>
+              <span className="absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300 group-hover:-top-4"></span>
             </a>
 
             <Link
               to="projects"
               smooth={true}
               duration={500}
-              className="buttonClass group cursor-pointer"
+              className="relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600 group cursor-pointer"
             >
               Projects <VscGithubProject className="text-xl" />
-              <span className="buttonAnimationColor group-hover:-top-4"></span>
+              <span className="absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300 group-hover:-top-4"></span>
             </Link>
           </div>
         </div>
@@ -155,18 +162,14 @@ const Banner = () => {
           className="h-full w-full flex justify-center items-center px-4 relative"
         >
           <div
-            className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30"
-            style={{ animation: "float 2.5s ease-in-out infinite" }}
+            className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30 animate-float"
           >
             {/* Lottie Background */}
             <div
               className="absolute inset-0 z-0 pointer-events-none"
               style={{ filter: `hue-rotate(${hue}deg)` }}
             >
-              <Lottie
-                options={{ animationData: bg, autoplay: true, loop: true }}
-                isClickToPauseDisabled={true}
-              />
+              <Lottie options={lottieOptions} isClickToPauseDisabled />
             </div>
 
             {/* Center Image */}
@@ -178,7 +181,7 @@ const Banner = () => {
 
             {/* React Icon */}
             <button
-              className="group p-2 absolute top-2 left-2 lg:top-4 lg:left-4 z-20 rotate-animation"
+              className="group p-2 absolute top-2 left-2 lg:top-4 lg:left-4 z-20 animate-rotate360"
               aria-label="React Icon"
             >
               <div className="relative">
@@ -189,7 +192,7 @@ const Banner = () => {
 
             {/* Tailwind Icon */}
             <button
-              className="group p-2 absolute bottom-2 right-2 lg:bottom-4 lg:right-4 z-20 scale-animation"
+              className="group p-2 absolute bottom-2 right-2 lg:bottom-4 lg:right-4 z-20 animate-scalePulse"
               aria-label="Tailwind Icon"
             >
               <div className="relative">
@@ -201,54 +204,38 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* Extra Animations */}
-      <style jsx>{`
-        @keyframes rotate360 {
-          0% {
-            transform: rotate(0deg);
+      {/* Tailwind Custom Animations */}
+      <style>
+        {`
+          .animate-rotate360 {
+            animation: rotate360 5s linear infinite;
           }
-          100% {
-            transform: rotate(360deg);
+
+          .animate-scalePulse {
+            animation: scalePulse 1.2s ease-in-out infinite;
+            animation-delay: 0.5s;
           }
-        }
 
-        @keyframes scalePulse {
-          0%,
-          100% {
-            transform: scale(1);
+          .animate-float {
+            animation: float 2.5s ease-in-out infinite;
           }
-          50% {
-            transform: scale(1.2);
+
+          @keyframes rotate360 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
-        }
 
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
+          @keyframes scalePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
           }
-          50% {
-            transform: translateY(-10px);
+
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
           }
-        }
-
-        .rotate-animation {
-          animation: rotate360 5s linear infinite;
-        }
-
-        .scale-animation {
-          animation: scalePulse 1.2s ease-in-out infinite;
-          animation-delay: 0.5s;
-        }
-
-        .buttonClass {
-          @apply relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600;
-        }
-
-        .buttonAnimationColor {
-          @apply absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300;
-        }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };
