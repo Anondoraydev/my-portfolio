@@ -1,5 +1,10 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "build": {
+    "env": {
+      "NPM_CONFIG_FROZEN_LOCKFILE": "false"
+    }
+  }
 }
