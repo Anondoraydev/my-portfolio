@@ -5,24 +5,54 @@ import { toast } from "react-toastify";
 import Slider from "react-slick";
 import user from "../../assets/logo/user.png";
 
+const defaultFeedbacks = [
+  {
+    name: "Jahid Hasan",
+    overview: "Excellent service! Very professional and helpful.",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    name: "Shamima Akter",
+    overview: "Loved the user experience. Highly recommended!",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    name: "Rafiul Islam",
+    overview: "Very smooth and responsive. Great work!",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    name: "Nusrat Jahan",
+    overview: "Outstanding interface and intuitive design.",
+    createdAt: new Date().toISOString(),
+  },
+];
+
 const Testimonials = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", overview: "" });
 
+  // Load feedbacks from localStorage or default
   useEffect(() => {
-    const savedFeedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-    setFeedbacks(savedFeedbacks);
+    const storedFeedbacks = localStorage.getItem("feedbacks");
+    if (storedFeedbacks) {
+      setFeedbacks(JSON.parse(storedFeedbacks));
+    } else {
+      setFeedbacks(defaultFeedbacks);
+      localStorage.setItem("feedbacks", JSON.stringify(defaultFeedbacks));
+    }
   }, []);
 
+  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle feedback submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, overview } = formData;
-
     if (!name || !overview) {
       toast.warn("Please fill out all fields.");
       return;
@@ -34,7 +64,7 @@ const Testimonials = () => {
       createdAt: new Date().toISOString(),
     };
 
-    const updatedFeedbacks = [newFeedback, ...feedbacks];
+    const updatedFeedbacks = [newFeedback, ...feedbacks].slice(0, 4);
     setFeedbacks(updatedFeedbacks);
     localStorage.setItem("feedbacks", JSON.stringify(updatedFeedbacks));
 
@@ -49,6 +79,7 @@ const Testimonials = () => {
     setOpen(false);
   };
 
+  // Slider settings
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -77,7 +108,6 @@ const Testimonials = () => {
         des="I'd love to hear your thoughts. Feel free to leave honest feedback!"
       />
 
-      {/* Modal */}
       {open && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
           <form
@@ -122,42 +152,36 @@ const Testimonials = () => {
         </div>
       )}
 
-      {/* Feedback Display */}
       <div className="mt-8">
-        {feedbacks.length > 0 ? (
-          <Slider {...sliderSettings}>
-            {feedbacks.map((item, index) => (
-              <div
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-                key={index}
-                className="px-3 py-6"
-              >
-                <div className="bg-[#1d1128]/20 rounded-2xl border border-purple-800/30 shadow-lg p-6 text-center transition hover:scale-[1.02] duration-300">
-                  <img
-                    src={user}
-                    alt="User"
-                    className="w-14 h-14 rounded-full border-2 border-purple-400 mx-auto mb-4"
-                  />
-                  <h3 className="text-lg font-semibold text-white mb-1">
-                    {item.name}
-                  </h3>
-                  <p className="text-sm text-gray-300">
-                    {item.overview?.slice(0, 120)}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    {new Date(item.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
+        <Slider {...sliderSettings}>
+          {feedbacks.map((item, index) => (
+            <div
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+              key={index}
+              className="px-3 py-6"
+            >
+              <div className="bg-[#1d1128]/20 rounded-2xl border border-purple-800/30 shadow-lg p-6 text-center min-h-[220px] min-w-[380px] transition hover:scale-[1.02] duration-300">
+                <img
+                  src={user}
+                  alt="User"
+                  className="w-14 h-14 rounded-full border-2 border-purple-400 mx-auto mb-4"
+                />
+                <h3 className="text-lg font-semibold text-white mb-1">
+                  {item.name}
+                </h3>
+                <p className="text-sm text-gray-300">
+                  {item.overview?.slice(0, 120)}
+                </p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {new Date(item.createdAt).toLocaleDateString()}
+                </p>
               </div>
-            ))}
-          </Slider>
-        ) : (
-          <div className="text-center text-gray-500">No feedback yet.</div>
-        )}
+            </div>
+          ))}
+        </Slider>
       </div>
 
-      {/* Button */}
       <div
         data-aos="fade-up"
         data-aos-anchor-placement="top-bottom"
