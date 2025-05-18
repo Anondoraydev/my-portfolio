@@ -17,8 +17,11 @@ importers:
       axios:
         specifier: ^1.9.0
         version: 1.9.0
+      emailjs-com:
+        specifier: ^3.2.0
+        version: 3.2.0
       framer-motion:
-        specifier: ^12.11.4
+        specifier: ^12.12.1
         version: 12.12.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       gsap:
         specifier: ^3.13.0
@@ -42,8 +45,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-hook-form:
-        specifier: ^7.56.3
-        version: 7.56.3(react@19.1.0)
+        specifier: ^7.56.4
+        version: 7.56.4(react@19.1.0)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
@@ -841,6 +844,11 @@ packages:
   electron-to-chromium@1.5.151:
     resolution: {integrity: sha512-Rl6uugut2l9sLojjS4H4SAr3A4IgACMLgpuEMPYCVcKydzfyPrn5absNRju38IhQOf/NwjJY8OGWjlteqYeBCA==}
 
+  emailjs-com@3.2.0:
+    resolution: {integrity: sha512-Prbz3E1usiAwGjMNYRv6EsJ5c373cX7/AGnZQwOfrpNJrygQJ15+E9OOq4pU8yC977Z5xMetRfc3WmDX6RcjAA==}
+    engines: {node: '>=12.0.0'}
+    deprecated: The SDK name changed to @emailjs/browser
+
   encodeurl@2.0.0:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
@@ -1476,8 +1484,8 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  react-hook-form@7.56.3:
-    resolution: {integrity: sha512-IK18V6GVbab4TAo1/cz3kqajxbDPGofdF0w7VHdCo0Nt8PrPlOZcuuDq9YYIV1BtjcX78x0XsldbQRQnQXWXmw==}
+  react-hook-form@7.56.4:
+    resolution: {integrity: sha512-Rob7Ftz2vyZ/ZGsQZPaRdIefkgOSrQSPXfqBdvOPwJfoGnjwRJUs7EM7Kc1mcoDv3NOtqBzPGbcMB8CGn9CKgw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -2402,6 +2410,8 @@ snapshots:
 
   electron-to-chromium@1.5.151: {}
 
+  emailjs-com@3.2.0: {}
+
   encodeurl@2.0.0: {}
 
   enhanced-resolve@5.18.1:
@@ -3001,7 +3011,7 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
-  react-hook-form@7.56.3(react@19.1.0):
+  react-hook-form@7.56.4(react@19.1.0):
     dependencies:
       react: 19.1.0
 
