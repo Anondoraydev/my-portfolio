@@ -95,11 +95,7 @@ const Banner = () => {
           </div>
 
           {/* Social Icons */}
-          <ul
-            data-aos="fade-up"
-            data-aos-delay="1200"
-            className="flex flex-row gap-6 items-center"
-          >
+          <ul className="flex flex-row gap-6 items-center">
             {socialLinks.map(({ link, icon, label }, i) => (
               <motion.li
                 key={i}
@@ -118,13 +114,17 @@ const Banner = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-white inline-block p-2 rounded-xl border border-white hover:border-purple-400 hover:text-purple-400 transition-all duration-300"
+                  className="inline-flex items-center p-2 rounded-xl border border-white text-white
+                   duration-300 ease-in-out
+                   hover:text-purple-500 hover:border-purple-500 hover:scale-110 hover:shadow-lg"
                 >
                   {icon}
                 </a>
               </motion.li>
             ))}
           </ul>
+
+
 
           {/* Buttons */}
           <div
@@ -133,23 +133,22 @@ const Banner = () => {
             className="flex flex-row flex-wrap gap-4 md:gap-6 items-center my-4"
           >
             <a
-              href="https://drive.google.com/file/d/1qRSADF-JFIjXiVWGD7wmunUomS4LjAcO/view?usp=sharing"
+              href="https://drive.google.com/file/d/1aEbprNVoY7MN8Kw1yRA016RwrzCiEaC-/view?usp=sharing"
               target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600 group"
+              className="buttonClass group inline-flex items-center gap-2"
             >
               Resume <MdFileDownload className="text-xl" />
-              <span className="absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300 group-hover:-top-4"></span>
+              <span className="buttonAnimationColor group-hover:-top-4"></span>
             </a>
 
             <Link
               to="projects"
               smooth={true}
               duration={500}
-              className="relative inline-flex items-center gap-2 px-6 py-2 text-white font-medium border border-purple-500 rounded-full overflow-hidden transition-all duration-300 hover:bg-purple-600 group cursor-pointer"
+              className="buttonClass group inline-flex items-center gap-2"
             >
               Projects <VscGithubProject className="text-xl" />
-              <span className="absolute left-0 top-0 w-full h-full bg-purple-500 opacity-20 transition-all duration-300 group-hover:-top-4"></span>
+              <span className="buttonAnimationColor group-hover:-top-4"></span>
             </Link>
           </div>
         </div>
