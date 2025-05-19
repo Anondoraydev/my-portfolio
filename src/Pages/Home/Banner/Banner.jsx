@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { FaReact } from "react-icons/fa";
+import { FaReact, FaWhatsapp } from "react-icons/fa";
 import { LuLinkedin, LuFacebook, LuGithub } from "react-icons/lu";
 import { MdFileDownload } from "react-icons/md";
 import { Link } from "react-scroll";
@@ -45,6 +45,11 @@ const Banner = () => {
       label: "Facebook",
       link: "https://www.facebook.com/anondo554.0",
     },
+    {
+      icon: <FaWhatsapp />,
+      label: "WhatsApp",
+      link: "https://wa.me/8801826339098",
+    },
   ];
 
   const lottieOptions = {
@@ -55,7 +60,7 @@ const Banner = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-around lg:mx-12 items-center min-h-[550px] mt-8 lg:mt-10 text-white">
-      {/* Left Content */}
+      {/* Left Section */}
       <div className="flex flex-1 justify-start items-center relative z-10">
         <div className="space-y-6 lg:space-y-8">
           <div
@@ -71,7 +76,7 @@ const Banner = () => {
               data-aos-delay="300"
               className="text-2xl md:text-3xl lg:text-4xl font-semibold"
             >
-              Hello, I`m Anondo Ray
+              Hello, I&apos;m Anondo Ray
             </h1>
 
             <div
@@ -94,7 +99,7 @@ const Banner = () => {
             </p>
           </div>
 
-          {/* Social Icons */}
+          {/* Social Links */}
           <ul className="flex flex-row gap-6 items-center">
             {socialLinks.map(({ link, icon, label }, i) => (
               <motion.li
@@ -124,8 +129,6 @@ const Banner = () => {
             ))}
           </ul>
 
-
-
           {/* Buttons */}
           <div
             data-aos="fade-up"
@@ -154,15 +157,13 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* Right Image and Animation */}
+      {/* Right Section - Lottie & Image */}
       <div className="flex flex-1 justify-center items-center h-full w-full relative my-6">
         <div
           data-aos="zoom-in"
           className="h-full w-full flex justify-center items-center px-4 relative"
         >
-          <div
-            className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30 animate-float"
-          >
+          <div className="relative w-[400px] h-[400px] md:w-[520px] md:h-[520px] overflow-hidden rounded-3xl flex justify-center items-center bg-main/30 animate-float">
             {/* Lottie Background */}
             <div
               className="absolute inset-0 z-0 pointer-events-none"
