@@ -11,6 +11,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import Lottie from "react-lottie";
 
+
 import logo from "../../../assets/logo/name-logo.svg";
 import TypingAnimation from "./TypingText";
 import Anondo from "../../../assets/Image/Anondo.png";
