@@ -117,6 +117,7 @@ const WelcomePage = () => {
             }
           }
         `}</style>
+        
       </div>
     </div>
   );

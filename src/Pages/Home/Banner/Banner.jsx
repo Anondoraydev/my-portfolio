@@ -30,6 +30,7 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Social Links
   const socialLinks = [
     {
       icon: <LuLinkedin />,
@@ -64,6 +65,7 @@ const Banner = () => {
       {/* Left Section */}
       <div className="flex flex-1 justify-start items-center relative z-10">
         <div className="space-y-6 lg:space-y-8">
+
           <div
             style={{
               backgroundImage: `url(${logo})`,

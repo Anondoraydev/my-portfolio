@@ -73,6 +73,7 @@ const Footer = () => {
       </div>
 
       {/* Floating Animation Keyframes */}
+      
       <style>{`
         @keyframes floatUp {
           0% { transform: translateY(0); opacity: 0.3; }
@@ -80,6 +81,8 @@ const Footer = () => {
           100% { transform: translateY(-100px); opacity: 0; }
         }
       `}</style>
+
+      
     </footer>
   );
 };
