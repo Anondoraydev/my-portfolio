@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const MysticWelcome = () => {
+const WelcomePage = () => {
   const [hide, setHide] = useState(false);
   const [showText, setShowText] = useState(false);
 
@@ -164,4 +164,4 @@ const MysticWelcome = () => {
   );
 };
 
-export default MysticWelcome;
+export default WelcomePage;
