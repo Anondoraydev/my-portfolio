@@ -23,14 +23,8 @@ const MysticWelcome = () => {
     >
       <div className="relative w-full h-full overflow-hidden bg-black">
 
-        {/* Background Gradient with stars shimmer */}
-        <div
-          className="absolute inset-0 -z-20 animate-bgPulse"
-          style={{
-            background:
-              "radial-gradient(circle at center, #0c011a 0%, #1a0733 40%, #2e0a42 80%, #0c0f2c 100%)",
-          }}
-        ></div>
+        {/* Background Gradient Animation */}
+        <div className="absolute inset-0 -z-30 animate-animatedBackground bg-animatedGalaxy"></div>
 
         {/* Mystic floating glowing orbs */}
         {Orbs.map((_, i) => {
@@ -75,7 +69,7 @@ const MysticWelcome = () => {
           )}
         </div>
 
-        {/* Keyframes */}
+        {/* Styles & Animations */}
         <style>{`
           @keyframes floatOrb {
             0%, 100% {
@@ -104,20 +98,6 @@ const MysticWelcome = () => {
             }
           }
 
-          @keyframes textGradient {
-            0%, 100% {
-              background-position: 0% 50%;
-            }
-            50% {
-              background-position: 100% 50%;
-            }
-          }
-
-          @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1; transform: translateY(0);}
-          }
-
           @keyframes waveTyping {
             0% {
               opacity: 0;
@@ -129,6 +109,23 @@ const MysticWelcome = () => {
             }
             100% {
               transform: translateY(0px) scale(1) rotateX(0deg);
+            }
+          }
+
+          @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+          }
+
+          @keyframes animatedBackground {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
             }
           }
 
@@ -151,6 +148,15 @@ const MysticWelcome = () => {
 
           .animate-fadeIn {
             animation: fadeIn 1.4s ease forwards;
+          }
+
+          .animate-animatedBackground {
+            animation: animatedBackground 20s ease infinite;
+            background-size: 400% 400%;
+          }
+
+          .bg-animatedGalaxy {
+            background-image: linear-gradient(-45deg, #1a032d, #320857, #0c0f2c, #23093f);
           }
         `}</style>
       </div>
