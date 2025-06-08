@@ -2,8 +2,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import { FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify"; // import toast
-import "react-toastify/dist/ReactToastify.css"; // toast css
 import Title from "../../Components/Shared/Title";
 import Form from "./Form";
 
@@ -12,30 +10,15 @@ const Contact = () => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
-  // Toast show করার function
-  const showToast = () => {
-    toast.error("No mail or phone app detected! Please configure your device.");
-  };
-
-  // link click handler, 0.7 সেকেন্ড পর Toast দেখাবে যদি অ্যাপ না খুলে
-  const handleLinkClick = (url) => (e) => {
-    setTimeout(() => {
-      showToast();
-    }, 700);
-  };
-
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      {/* Toast container must be inside the main component */}
-      <ToastContainer position="top-center" autoClose={3000} />
-
       <Title title={"Contact Me"} />
 
       <div
-        className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative mt-8
-                   bg-[#2e1846]/20 backdrop-blur-md shadow-lg rounded-2xl p-10 w-full"
+        className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative mt-8 bg-[#2e1846]/20 backdrop-blur-md shadow-lg rounded-2xl p-10 w-full"
         data-aos="fade-up"
       >
+        {/* Left side - Form */}
         <div className="lg:col-span-2 lg:order-last w-full" data-aos="fade-left">
           <h3 className="text-xl md:text-2xl font-semibold text-fuchsia-400 mb-6">
             Leave a Message
@@ -43,6 +26,7 @@ const Contact = () => {
           <Form />
         </div>
 
+        {/* Right side - Contact Info */}
         <div className="lg:col-span-1 w-full" data-aos="fade-right">
           <h2 className="text-xl md:text-2xl font-bold text-fuchsia-400 mb-4">
             Get in Touch
@@ -52,10 +36,8 @@ const Contact = () => {
           </p>
 
           <div className="space-y-6">
-            <div
-              className="flex items-center gap-3 p-4 rounded-lg hover:bg-fuchsia-900/20 transition cursor-pointer"
-              onClick={handleLinkClick("mailto:anondo554@gmail.com")}
-            >
+            {/* Email */}
+            <div className="flex items-center gap-3 p-4 rounded-lg hover:bg-fuchsia-900/20 transition cursor-pointer">
               <FaEnvelope className="text-fuchsia-400 text-xl" />
               <a
                 href="mailto:anondo554@gmail.com"
@@ -65,10 +47,8 @@ const Contact = () => {
               </a>
             </div>
 
-            <div
-              className="flex items-center gap-3 p-4 rounded-lg hover:bg-fuchsia-900/20 transition cursor-pointer"
-              onClick={handleLinkClick("tel:+8801826339098")}
-            >
+            {/* Phone */}
+            <div className="flex items-center gap-3 p-4 rounded-lg hover:bg-fuchsia-900/20 transition cursor-pointer">
               <FaPhone className="text-fuchsia-400 text-xl" />
               <a
                 href="tel:+8801826339098"
@@ -78,6 +58,7 @@ const Contact = () => {
               </a>
             </div>
 
+            {/* WhatsApp */}
             <div className="flex items-center gap-3 p-4 rounded-lg hover:bg-fuchsia-900/20 transition cursor-pointer">
               <FaWhatsapp className="text-fuchsia-400 text-xl" />
               <a
