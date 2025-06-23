@@ -1,38 +1,29 @@
 [
   {
     "id": 1,
-    "name": "JobHive Hiring Agency Platform",
-    "images": "https://i.ibb.co/twpRXStd/Screenshot-2024-10-25-200015.png",
-    "image": "https://i.ibb.co/twpRXStd/Screenshot-2024-10-25-200015.png",
-    "stack": [
-      "React Js",
-      "DaisyUi",
-      "Tailwind CSS",
-      "Express.js",
-      "Node.js",
-      "MongoDB",
-      "Node.js",
-      "Firebase"
-    ],
-    "description": "A Hiring Agency & Communication Platform connects job seekers, employers, freelancers, and recruiters in various industries. Job seekers can create profiles, apply for jobs, and communicate with employers. Employers can post job listings, shortlist candidates, and conduct interviews. ",
-    "liveLink": "https://steep-silk.surge.sh/",
-    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
-    "challenges": "Securing the user API based on roles was a significant challenge for me.",
-    "improvements": "I have implemented robust security measures for all buyer and admin features, ensuring that unauthorized access is completely prevented."
+    "name": "Special Birthday | Event Management | JobHive Hiring Agency Platform",
+    "images": "https://github.com/Anondoraydev/glorebd-repo",
+    "image": "https://i.ibb.co/6kLHbqH/Screenshot-2024-10-25-200015.png",
+    "stack": ["React Js", "DaisyUi", "Tailwind CSS", "Node.js", "Firebase"],
+    "description": "This project combines three platforms into one showcase:\n\n1. **Special Birthday** – A birthday event planning app with invite system, countdown timer, and personalized wishes.\n2. **Event Management** – A full-featured event planner for weddings, corporate events, and cultural programs.\n3. **JobHive Hiring Agency Platform** – A hiring and communication platform for job seekers and recruiters to interact, post jobs, and conduct interviews.",
+    "liveLink": "https://event-mangment-hazel.vercel.app",
+    "github": "https://github.com/Anondoraydev/event-mangment",
+    "challenges": "Handling multiple user roles across three different types of apps, ensuring secure API access and proper role-based functionality.",
+    "improvements": "Role-based access, Firebase live updates, WebSocket integration, and secured API with JWT for all platforms have been implemented to ensure a robust and real-time experience."
   },
   {
     "id": 2,
-    "name": "WorkFlow Earning Platform",
-    "images": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
-    "image": "https://i.ibb.co/JwtVxfVn/Screenshot-2024-10-25-200015.png",
-
-    "stack": ["React Js", "DaisyUi", "Tailwind CSS"],
-    "description": "This platform is designed for micro-tasking and earning, where users take on specific roles to complete tasks, submit reviews, withdraw coins, and receive notifications. The platform consists of three key roles: Worker, Buyer, and Admin. ",
-    "liveLink": "https://steep-silk.surge.sh/",
-    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
-    "challenges": "Securing the user API based on roles was a significant challenge for me.",
-    "improvements": "I have implemented robust security measures for all buyer and admin features, ensuring that unauthorized access is completely prevented."
+    "name": "My Awesome Shop",
+    "images": "https://i.ibb.co/KpNgPw7t/Screenshot-2025-06-09-112546.png",
+    "image": "https://i.ibb.co/KpNgPw7t/Screenshot-2025-06-09-112546.png",
+    "stack": ["React.js", "Redux", "Tailwind CSS", "Node.js", "Stripe API"],
+    "description": "This is a full-featured e-commerce website where users can browse products, add items to cart, and securely checkout using Stripe payment gateway. Admins can add, update, or delete products and manage orders.",
+    "liveLink": "https://glorebd-repo.vercel.app/",
+    "github": "https://github.com/Anondoraydev/glorebd-repo",
+    "challenges": "Implementing secure payment integration and managing complex state with Redux were the major challenges.",
+    "improvements": "Added JWT authentication for users and admins, optimized product filtering and search for better UX."
   },
+
   {
     "id": 3,
     "name": "Home Repair Service",
