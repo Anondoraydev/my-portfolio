@@ -38,6 +38,7 @@
       "Node.js",
       "Firebase"
     ],
+    
     "description": "The home repair service website is a platform where users can easily purchase home services. Additionally, anyone can act as an admin to post their own services and provide them, while also being able to avail other services. However, users cannot purchase the services they have posted themselves.",
     "liveLink": "https://steep-silk.surge.sh/",
     "github": "https://github.com/Anondoraydev/react-career-hub-repo",
