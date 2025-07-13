@@ -173,6 +173,7 @@ const Testimonials = () => {
                 <p className="text-sm text-gray-300">
                   {item.overview?.slice(0, 120)}
                 </p>
+                
                 <p className="text-xs text-gray-500 mt-2">
                   {new Date(item.createdAt).toLocaleDateString()}
                 </p>
