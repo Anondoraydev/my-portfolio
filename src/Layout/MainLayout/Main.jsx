@@ -1,14 +1,13 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../../Components/Header/Navbar";
-import Footer from "../../Components/Footer/Footer";
-import { ToastContainer } from "react-toastify";
-import { Link } from "react-scroll";
-import { useEffect, useState } from "react";
-import AnimatedBackground from "../../Components/AnimatedBackground";
 import { ArrowUp } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { Link } from "react-scroll";
+import { ToastContainer } from "react-toastify";
+import AnimatedBackground from "../../Components/AnimatedBackground";
+import Footer from "../../Components/Footer/Footer";
+import Navbar from "../../Components/Header/Navbar";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
-import WelcomePage from "../../Pages/WelcomePage/WelcomePage";
 
 const Main = () => {
   const [show, setShow] = useState(false);
@@ -33,7 +32,6 @@ const Main = () => {
         <Outlet />
       </section>
       <Footer />
-      <WelcomePage />
       <ToastContainer autoClose={3000} hideProgressBar={true} />
       <div className="relative">
         <motion.div
@@ -45,9 +43,9 @@ const Main = () => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className={`fixed bottom-4 right-4 z-50 lg:right-6 lg:bottom-8 ${show ? "block" : "hidden"
-            }`}
-        >
+          className={`fixed bottom-4 right-4 z-50 lg:right-6 lg:bottom-8 ${
+            show ? "block" : "hidden"
+          }`}>
           <Link to="home" smooth={true} duration={500}>
             <ArrowUp
               size={40}

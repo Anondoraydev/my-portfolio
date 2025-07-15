@@ -1,41 +1,49 @@
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 const AnimatedBackground = () => {
   const bgRef = useRef(null);
   const timeouts = useRef([]);
+  const hue = useRef(0); // Mouse trail hue shift tracker
 
   useEffect(() => {
     const container = bgRef.current;
     if (!container) return;
 
-    // Mouse dot trail
-    const handleMouseMove = (e) => {
+    // 🌈 Mouse dot trail with smooth color shifting
+    const handleMouseMove = e => {
       const dot = document.createElement("div");
+
+      // Smooth color shifting using HSL
+      const currentHue = hue.current % 360;
+      hue.current += 5; // speed of color change (adjust if needed)
+      const color = `hsl(${currentHue}, 100%, 70%)`;
+
       Object.assign(dot.style, {
         position: "absolute",
         width: "4px",
         height: "4px",
-        background: "aqua",
+        background: color,
         borderRadius: "50%",
         top: `${e.clientY}px`,
         left: `${e.clientX}px`,
         pointerEvents: "none",
         opacity: 0.8,
-        zIndex: 999,
+        zIndex: 9999,
         transform: "translate(-50%, -50%)",
-        boxShadow: "0 0 6px aqua, 0 0 12px aqua",
+        boxShadow: `0 0 6px ${color}, 0 0 12px ${color}`,
         transition: "opacity 0.5s ease-out",
       });
       container.appendChild(dot);
+
       setTimeout(() => {
         dot.style.opacity = "0";
         setTimeout(() => container.removeChild(dot), 500);
-      }, 100);
+      }, 80);
     };
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Stars setup
+    // 🌟 Stars setup
     const stars = [];
     const centerXPercent = 50;
     const centerYPercent = 50;
@@ -51,23 +59,21 @@ const AnimatedBackground = () => {
         top: `${centerYPercent}%`,
         left: `${centerXPercent}%`,
         backgroundColor: "white",
-        opacity: Math.random() * 0.2 + 0.8, // 0.8 to 1.0 opacity for bright stars
+        opacity: Math.random() * 0.2 + 0.8,
         pointerEvents: "none",
       });
       container.appendChild(star);
       stars.push(star);
 
-      // initial position around center
       gsap.set(star, {
-        x: (Math.random() * window.innerWidth) - (window.innerWidth / 2),
-        y: (Math.random() * window.innerHeight) - (window.innerHeight / 2),
+        x: Math.random() * window.innerWidth - window.innerWidth / 2,
+        y: Math.random() * window.innerHeight - window.innerHeight / 2,
       });
 
-      // animate star movement with bigger range and shorter duration
       const animateStar = () => {
         gsap.to(star, {
-          duration: Math.random() * 5 + 7, // 7-12 seconds (faster)
-          x: "+=" + (Math.random() * 300 - 150), // ±150px movement range
+          duration: Math.random() * 5 + 7,
+          x: "+=" + (Math.random() * 300 - 150),
           y: "+=" + (Math.random() * 300 - 150),
           opacity: Math.random() * 0.2 + 0.8,
           ease: "power1.inOut",
@@ -77,7 +83,7 @@ const AnimatedBackground = () => {
       animateStar();
     }
 
-    // Shooting star
+    // 🌠 Shooting stars
     const createShootingStar = () => {
       const star = document.createElement("div");
       Object.assign(star.style, {
@@ -105,7 +111,7 @@ const AnimatedBackground = () => {
     };
     createShootingStar();
 
-    // Floating orbs
+    // 🪐 Floating Orbs
     for (let i = 0; i < 10; i++) {
       const orb = document.createElement("div");
       const size = Math.random() * 100 + 100;
@@ -113,13 +119,16 @@ const AnimatedBackground = () => {
         position: "absolute",
         width: `${size}px`,
         height: `${size}px`,
-        background: "radial-gradient(circle, rgba(0,255,255,0.07), transparent)",
+        background:
+          "radial-gradient(circle, rgba(0,255,255,0.07), transparent)",
         borderRadius: "50%",
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
         pointerEvents: "none",
         filter: "blur(40px)",
-        animation: `float ${Math.random() * 20 + 10}s ease-in-out infinite alternate`,
+        animation: `float ${
+          Math.random() * 20 + 10
+        }s ease-in-out infinite alternate`,
       });
       container.appendChild(orb);
     }
@@ -135,11 +144,11 @@ const AnimatedBackground = () => {
       ref={bgRef}
       className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden"
       style={{
-        background: "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
+        background:
+          "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
         animation: "bgPulse 25s ease-in-out infinite",
         cursor: "none",
-      }}
-    >
+      }}>
       {/* Aurora Light */}
       <div className="absolute w-full h-full mix-blend-screen">
         <div className="absolute w-[200%] h-[200%] bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-sky-500 opacity-10 blur-3xl animate-aurora"></div>
@@ -188,19 +197,19 @@ const AnimatedBackground = () => {
           100% { transform: rotate(360deg); }
         }
         .animate-aurora {
-          animation: aurora 40s linear infinite;
+          animation: aurora 50s linear infinite;
         }
         .animate-cloud {
-          animation: cloud 30s ease-in-out infinite alternate;
-        }
-        .animate-lensflare {
-          animation: lensflare 8s linear infinite;
+          animation: cloud 40s ease-in-out infinite alternate;
         }
         .animate-slow-pan {
           animation: slow-pan 60s linear infinite;
         }
         .animate-rotate-slow {
           animation: rotate-slow 100s linear infinite;
+        }
+        .animate-lensflare {
+          animation: lensflare 8s linear infinite;
         }
       `}</style>
     </div>
