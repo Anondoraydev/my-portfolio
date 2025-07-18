@@ -14,7 +14,6 @@ const Contact = () => {
     
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <Title title={"Contact Me"} />
-
       <div
         className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative mt-8 bg-[#2e1846]/20 backdrop-blur-md shadow-lg rounded-2xl p-10 w-full"
         data-aos="fade-up"
