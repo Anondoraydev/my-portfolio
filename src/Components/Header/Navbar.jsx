@@ -33,7 +33,6 @@ const Navbar = () => {
 
   return (
     <div className="h-[76px]">
-      
       <div
         className={`fixed top-0 left-0 w-full z-50 transition-transform duration-500 ease-in-out
         }`}>
