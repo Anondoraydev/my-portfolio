@@ -11,6 +11,7 @@ const TypingAnimation = () => {
               "React Specialist",
               "UI/UX Designer",
             ]}
+            
             loop={0}
             typeSpeed={150}
             deleteSpeed={100}
