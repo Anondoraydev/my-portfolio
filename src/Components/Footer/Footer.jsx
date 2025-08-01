@@ -75,6 +75,7 @@ const Footer = () => {
                 className="hover:text-blue-400 transition duration-300">
                 <FaLinkedinIn />
               </a>
+
               <a
                 href="https://github.com/Anondoraydev"
                 target="_blank"
@@ -90,7 +91,7 @@ const Footer = () => {
         <div className="pt-6 text-center text-xs text-gray-500">
           © 2025 Anondo Ray — All rights reserved.
         </div>
-      </div> 
+      </div>
       {/* Floating Animation Keyframes */}
 
       <style>{`
