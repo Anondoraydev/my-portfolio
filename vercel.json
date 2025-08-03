@@ -1,10 +1,8 @@
 {
-  "buildCommand": "pnpm install --no-frozen-lockfile && npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "build": {
-    "env": {
-      "NPM_CONFIG_FROZEN_LOCKFILE": "false"
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
-  }
+  ]
 }
