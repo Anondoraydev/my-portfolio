@@ -2,21 +2,21 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 
 const AnimatedBackground = () => {
-  const bgRef = useRef(null);
+  const bgRef = useRef(null); // ব্যাকগ্রাউন্ডের container
+  const trailRef = useRef(null); // মাউস ডট ট্রেইলের container
   const timeouts = useRef([]);
-  const hue = useRef(0); // Mouse trail hue shift tracker
+  const hue = useRef(0);
 
   useEffect(() => {
-    const container = bgRef.current;
+    const container = trailRef.current;
     if (!container) return;
 
-    // 🌈 Mouse dot trail with smooth color shifting
+    // Mouse trail dots
     const handleMouseMove = e => {
       const dot = document.createElement("div");
 
-      // Smooth color shifting using HSL
       const currentHue = hue.current % 360;
-      hue.current += 5; // speed of color change (adjust if needed)
+      hue.current += 5;
       const color = `hsl(${currentHue}, 100%, 70%)`;
 
       Object.assign(dot.style, {
@@ -34,6 +34,7 @@ const AnimatedBackground = () => {
         boxShadow: `0 0 6px ${color}, 0 0 12px ${color}`,
         transition: "opacity 0.5s ease-out",
       });
+
       container.appendChild(dot);
 
       setTimeout(() => {
@@ -41,9 +42,20 @@ const AnimatedBackground = () => {
         setTimeout(() => container.removeChild(dot), 500);
       }, 80);
     };
+
     window.addEventListener("mousemove", handleMouseMove);
 
-    // 🌟 Stars setup
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      timeouts.current.forEach(clearTimeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    const container = bgRef.current;
+    if (!container) return;
+
+    // Stars
     const stars = [];
     const centerXPercent = 50;
     const centerYPercent = 50;
@@ -83,7 +95,7 @@ const AnimatedBackground = () => {
       animateStar();
     }
 
-    // 🌠 Shooting stars
+    // Shooting stars
     const createShootingStar = () => {
       const star = document.createElement("div");
       Object.assign(star.style, {
@@ -96,6 +108,7 @@ const AnimatedBackground = () => {
         opacity: 0.8,
         transform: "rotate(45deg)",
         pointerEvents: "none",
+        zIndex: 9999,
       });
       container.appendChild(star);
       gsap.to(star, {
@@ -111,7 +124,7 @@ const AnimatedBackground = () => {
     };
     createShootingStar();
 
-    // 🪐 Floating Orbs
+    // Floating Orbs
     for (let i = 0; i < 10; i++) {
       const orb = document.createElement("div");
       const size = Math.random() * 100 + 100;
@@ -134,37 +147,44 @@ const AnimatedBackground = () => {
     }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
       timeouts.current.forEach(clearTimeout);
     };
   }, []);
 
   return (
-    <div
-      ref={bgRef}
-      className="fixed top-0 left-0 w-screen h-screen -z-50 overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
-        animation: "bgPulse 25s ease-in-out infinite",
-        cursor: "none",
-      }}>
-      {/* Aurora Light */}
-      <div className="absolute w-full h-full mix-blend-screen">
-        <div className="absolute w-[200%] h-[200%] bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-sky-500 opacity-10 blur-3xl animate-aurora"></div>
+    <>
+      {/* Background container */}
+      <div
+        ref={bgRef}
+        className="fixed top-0 left-0 w-screen h-screen -z-50 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at bottom, #020014 0%, #000000 100%)",
+          animation: "bgPulse 25s ease-in-out infinite",
+        }}>
+        {/* Aurora Light */}
+        <div className="absolute w-full h-full mix-blend-screen">
+          <div className="absolute w-[200%] h-[200%] bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-sky-500 opacity-10 blur-3xl animate-aurora"></div>
+        </div>
+
+        {/* Grid Layer */}
+        <div className="absolute w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-mosaic.png')] opacity-5 animate-slow-pan mix-blend-overlay"></div>
+
+        {/* Nebula Cloud */}
+        <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.03),_transparent_60%)] blur-2xl animate-cloud"></div>
+
+        {/* Galaxy Swirl */}
+        <div className="absolute w-full h-full bg-[radial-gradient(circle,_rgba(0,200,255,0.04),_transparent_70%)] animate-rotate-slow blur-3xl mix-blend-soft-light"></div>
+
+        {/* Lens Flare */}
+        <div className="absolute w-full h-1 blur-3xl bg-gradient-to-r from-transparent via-white to-transparent opacity-5 animate-lensflare"></div>
       </div>
 
-      {/* Grid Layer */}
-      <div className="absolute w-full h-full bg-[url('https://www.transparenttextures.com/patterns/dark-mosaic.png')] opacity-5 animate-slow-pan mix-blend-overlay"></div>
-
-      {/* Nebula Cloud */}
-      <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.03),_transparent_60%)] blur-2xl animate-cloud"></div>
-
-      {/* Galaxy Swirl */}
-      <div className="absolute w-full h-full bg-[radial-gradient(circle,_rgba(0,200,255,0.04),_transparent_70%)] animate-rotate-slow blur-3xl mix-blend-soft-light"></div>
-
-      {/* Lens Flare */}
-      <div className="absolute w-full h-1 blur-3xl bg-gradient-to-r from-transparent via-white to-transparent opacity-5 animate-lensflare"></div>
+      {/* Mouse dot trail container */}
+      <div
+        ref={trailRef}
+        className="fixed top-0 left-0 w-screen h-screen pointer-events-none"
+        style={{ zIndex: 9999 }}></div>
 
       <style>{`
         @keyframes bgPulse {
@@ -212,7 +232,7 @@ const AnimatedBackground = () => {
           animation: lensflare 8s linear infinite;
         }
       `}</style>
-    </div>
+    </>
   );
 };
 

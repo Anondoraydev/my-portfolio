@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../Pages/Home/Home";
 import Main from "../Layout/MainLayout/Main";
 import ViewDetails from "../Pages/Details/ViewDetails";
+import Home from "../Pages/Home/Home";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => {
           const res = await fetch("/projects.json");
           const data = await res.json();
-          return data.find((p) => p.id == params.id);
+          return data.find(p => p.id == params.id);
         },
       },
     ],
