@@ -1,12 +1,45 @@
-# React + Vite
+<h1 align="center">🌐 Anondo Ray - Portfolio Website</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  Welcome to my personal portfolio! Built with ❤️ using modern web technologies to showcase my work, skills, and more.
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://my-portfolio-smoky-seven-13.vercel.app" target="_blank">
+    🔗 Visit Live Website
+  </a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  <img src="https://i.ibb.co.com/pNzKRgP/Screenshot-2025-08-06-215236.png" alt="Portfolio Screenshot" width="100%" />
+</p>
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Tech Stack
+
+- ⚛️ React & Next.js
+- 🎨 Tailwind CSS
+- 🌐 HTML5, CSS3
+- 🔧 TypeScript
+- 📦 Deployed on [Vercel](https://vercel.com)
+
+---
+
+## ✨ Features
+
+- Fully responsive and mobile-friendly
+- Smooth scrolling and animation
+- About me, projects, and contact section
+- Stylish dark theme UI
+- Deployed on Vercel for lightning-fast speed
+
+---
+
+## 🧪 Getting Started
+
+```bash
+git clone https://github.com/Anondoraydev/your-repo-name.git
+cd your-repo-name
+npm install
+npm run dev
