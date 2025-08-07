@@ -38,6 +38,7 @@ const Main = () => {
           animate={{
             y: [0, -10, 0], // up and down
           }}
+          
           transition={{
             duration: 1.5,
             repeat: Infinity,
