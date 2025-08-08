@@ -26,6 +26,7 @@ const Main = () => {
   }, []);
 
   return (
+    // Main layout component that includes the Navbar, Animated Background, Outlet for nested routes, Footer, and a scroll-to-top button
     <div className={`overflow-hidden relative`}>
       <AnimatedBackground />
       <Navbar />
@@ -54,7 +55,7 @@ const Main = () => {
               size={40}
               className="text-2xl cursor-pointer bg-gradient-to-br p-2 from-fuchsia-900/70 to-fuchsia-500/40 backdrop-blur-lg rounded-full"
             />
-            
+
           </Link>
           <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white/50 filter blur-[5px] h-2 rounded-[50%] w-[90%]"></div>
         </motion.div>
