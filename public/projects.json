@@ -2,9 +2,15 @@
   {
     "id": 1,
     "name": "Special Birthday | Event Management | JobHive Hiring Agency Platform",
-    "images": "https://github.com/Anondoraydev/glorebd-repo",
+    "images": "https://i.ibb.co/6kLHbqH/Screenshot-2024-10-25-200015.png",
     "image": "https://i.ibb.co/6kLHbqH/Screenshot-2024-10-25-200015.png",
-    "stack": ["React Js", "DaisyUi", "Tailwind CSS", "Node.js", "Firebase"],
+    "stack": [
+      "React Js",
+      "DaisyUi",
+      "Tailwind CSS",
+      "Node.js",
+      "Firebase"
+    ],
     "description": "This project combines three platforms into one showcase:\n\n1. **Special Birthday** – A birthday event planning app with invite system, countdown timer, and personalized wishes.\n2. **Event Management** – A full-featured event planner for weddings, corporate events, and cultural programs.\n3. **JobHive Hiring Agency Platform** – A hiring and communication platform for job seekers and recruiters to interact, post jobs, and conduct interviews.",
     "liveLink": "https://event-mangment-hazel.vercel.app",
     "github": "https://github.com/Anondoraydev/event-mangment",
@@ -16,18 +22,23 @@
     "name": "My Awesome Shop",
     "images": "https://i.ibb.co/KpNgPw7t/Screenshot-2025-06-09-112546.png",
     "image": "https://i.ibb.co/KpNgPw7t/Screenshot-2025-06-09-112546.png",
-    "stack": ["React.js", "Redux", "Tailwind CSS", "Node.js", "Stripe API"],
+    "stack": [
+      "React.js",
+      "Redux",
+      "Tailwind CSS",
+      "Node.js",
+      "Stripe API"
+    ],
     "description": "This is a full-featured e-commerce website where users can browse products, add items to cart, and securely checkout using Stripe payment gateway. Admins can add, update, or delete products and manage orders.",
     "liveLink": "https://glorebd-repo.vercel.app/",
     "github": "https://github.com/Anondoraydev/glorebd-repo",
     "challenges": "Implementing secure payment integration and managing complex state with Redux were the major challenges.",
     "improvements": "Added JWT authentication for users and admins, optimized product filtering and search for better UX."
   },
-
   {
     "id": 3,
-    "name": "Home Repair Service",
-    "image": "https://i.ibb.co/6kLHbqH/Screenshot-2024-10-25-200015.png",
+    "name": "E-commerce Website",
+    "image": "https://i.ibb.co.com/JjLRPvzQ/Screenshot-2025-08-13-214136.png",
     "stack": [
       "React Js",
       "DaisyUi",
@@ -35,20 +46,18 @@
       "Express.js",
       "Node.js",
       "MongoDB",
-      "Node.js",
       "Firebase"
     ],
-    
-    "description": "The home repair service website is a platform where users can easily purchase home services. Additionally, anyone can act as an admin to post their own services and provide them, while also being able to avail other services. However, users cannot purchase the services they have posted themselves.",
-    "liveLink": "https://steep-silk.surge.sh/",
-    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
-    "challenges": "Developing an API to efficiently manage services posed a considerable challenge for me.",
-    "improvements": "I have implemented JWT token-based authentication to secure all essential APIs, ensuring robust security."
+    "description": "A complete e-commerce platform where users can browse products, add them to cart, and checkout securely. Admins can manage product inventory, process orders, and monitor sales performance.",
+    "liveLink": "https://e-commerce-repo.netlify.app/",
+    "github": "https://github.com/Anondoraydev/E-commerce-site",
+    "challenges": "Building a scalable API for managing products, orders, and user authentication was a challenging part.",
+    "improvements": "Implemented JWT authentication, role-based access for admins, and optimized backend queries for faster performance."
   },
   {
     "id": 4,
-    "name": "Blood Donor Camp",
-    "image": "https://i.ibb.co.com/2JBFGtD/blood-Donor.png",
+    "name": "E-commerce React Project",
+    "image": "https://i.ibb.co.com/twpRXStd/Screenshot-2024-10-25-200015.png",
     "stack": [
       "React Js",
       "DaisyUi",
@@ -56,13 +65,12 @@
       "Express.js",
       "Node.js",
       "MongoDB",
-      "Node.js",
       "Firebase"
     ],
-    "description": "It’s a comprehensive blood donation platform where users can create accounts to register as blood donors or recipients. In times of need, users can directly contact blood donors based on their location. The platform aims to provide an efficient and secure way for individuals to find and connect with potential blood donors, ensuring timely access to blood donations in critical situations.",
-    "liveLink": "https://steep-silk.surge.sh/",
-    "github": "https://github.com/Anondoraydev/react-career-hub-repo",
-    "challenges": "I didn’t face any major problems, but developing the APIs did present some challenges.",
-    "improvements": "I implemented a feedback form to allow users to submit their suggestions and opinions, ensuring valuable input for continuous improvement."
+    "description": "An e-commerce site built with React and Express.js, allowing users to browse products, search, filter, and make purchases. Admins can upload new products and manage existing listings.",
+    "liveLink": "https://e-commerce-react-repo.vercel.app/",
+    "github": "https://github.com/Anondoraydev/e-commerce-react-repo",
+    "challenges": "Integrating search and filter features with MongoDB while keeping the UI fast and responsive.",
+    "improvements": "Added a feedback form for customer reviews and improved product listing performance."
   }
 ]
