@@ -67,7 +67,6 @@
       "MongoDB",
       "Firebase"
     ],
-    
     "description": "An e-commerce site built with React and Express.js, allowing users to browse products, search, filter, and make purchases. Admins can upload new products and manage existing listings.",
     "liveLink": "https://e-commerce-react-repo.vercel.app/",
     "github": "https://github.com/Anondoraydev/e-commerce-react-repo",
