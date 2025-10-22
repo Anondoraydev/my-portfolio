@@ -7,6 +7,7 @@ import Testimonials from "../Testimonials/Testimonials";
 import Banner from "./Banner/Banner";
 
 const Home = () => {
+  
   return (
     <main className="space-y-9 md:space-y-12">
       <section id="home" data-section="home">
